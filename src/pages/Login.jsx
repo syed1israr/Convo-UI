@@ -10,14 +10,14 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import axios from "axios";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { VisuallyHiddenInput } from "../components/Styles/StyledComponent";
 import { LightBlue } from "../constants/Color";
+import { userExists } from "../redux/reducers/auth.js";
 import { usernameValidator } from "../utils/validators";
-import toast from "react-hot-toast"
-import axios from "axios"
-import {userExists} from "../redux/reducers/auth.js"
 
 import { server } from "../constants/config";
 const Login = () => {

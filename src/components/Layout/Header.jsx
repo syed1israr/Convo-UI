@@ -1,11 +1,14 @@
-import React, { Suspense, lazy, useState } from 'react';
+import { AddCircleRounded as AddIcon, ChatBubbleRounded, Group as GroupIcon, LogoutRounded as LogoutRoundedIcon, Menu as MenuIcon, Notifications as NotificationsIcon, Search as SearchIcon } from '@mui/icons-material';
 import { AppBar, Backdrop, Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material';
-import { orange } from '../../constants/Color';
-import { Group as GroupIcon, Menu as MenuIcon, Search as SearchIcon, AddCircleRounded as AddIcon, LogoutRounded as LogoutRoundedIcon, Notifications as NotificationsIcon, ChatBubbleOutlineTwoTone, ChatBubbleRounded } from '@mui/icons-material';
+import axios from 'axios';
+import React, { Suspense, lazy, useState } from 'react';
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch} from 'react-redux';
-import { userExists } from '../../redux/reducers/auth';
-import toast from 'react-hot-toast';
+import { orange } from '../../constants/Color';
+import { server } from "../../constants/config.js";
+import { userNotExists } from "../../redux/reducers/auth.js";
+import { setIsMobile, setIsSearch } from '../../redux/reducers/misc.js';
 
 // Lazy-loaded components
 const SearchDialog = lazy(() => import('../specific/Search'));
@@ -14,26 +17,34 @@ const NewGroupDialog = lazy(() => import('../specific/NewGroups'));
 
 const Header = () => {
   const navigate = useNavigate();
-  const [mobile, setMobile] = useState(false);
-  const [isSearch, setIsSearch] = useState(false);
+  const { isSearch } = useSelector(state=>state.misc)
+  
   const [isNewGroup, setIsNewGroup] = useState(false);
   const [isNotification, setIsNotification] = useState(false);
   const dispatch=useDispatch()
   const handleMobile = () => {
-    setMobile(!mobile);
+    dispatch(setIsMobile(true));
   };
 
   const openSearchDialog = () => {
-    setIsSearch(!isSearch);
+      dispatch(setIsSearch(true))
   };
 
   const openNewGroup = () => {
     setIsNewGroup(!isNewGroup);
   };
 
-  const logoutHandler = () => {
-    dispatch(userExists(false))
-    toast.error("Nikal Bahar Bhosdike")
+  const logoutHandler = async () => {
+ try {
+     console.log("User Loggin out")
+     const { data }= await  axios.get(`${server}/user/logout`,{
+       withCredentials:true
+     })
+     toast.success(data.message)
+     dispatch(userNotExists())
+ } catch (error) {
+    toast.error(error?.response?.data?.message || "Something went Wrong ")
+ }
   };
 
   const openNotification = () => {

@@ -1,7 +1,7 @@
 import { Add as AddIcCallRoundedIcon,RemoveCircle as RemoveCircleOutlineIcon } from '@mui/icons-material';
 import { Avatar, IconButton, ListItem, Stack, Typography } from '@mui/material';
 import React, { memo } from 'react';
-
+import { transoformImage} from "../../lib/Features"
 const UserItem = ({ user, handler, handlerisLoading,isAdded=false ,styling={} }) => {
   const { name, _id, avatar  } = user;
 
@@ -9,7 +9,7 @@ const UserItem = ({ user, handler, handlerisLoading,isAdded=false ,styling={} })
     <ListItem>
       <Stack direction="row" alignItems="center" spacing={1} width="100%"
       {...styling}>
-        <Avatar  src={avatar}/>
+        <Avatar  src={transoformImage(avatar)}/>
         <Typography
           variant="body1"
           sx={{

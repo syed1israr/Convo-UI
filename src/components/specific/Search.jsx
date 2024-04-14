@@ -1,55 +1,82 @@
-import React, { useState } from 'react';
+import { useInputValidation } from "6pp";
+import { Search as SearchIcon } from "@mui/icons-material";
 import {
   Dialog,
   DialogTitle,
   InputAdornment,
   List,
-  ListItem,
   Stack,
-  TextField
-} from '@mui/material';
-import { SearchRounded } from '@mui/icons-material';
-import UserItem from '../Shared/UserItem';
-import { sampleUsers } from '../../constants/SampleData';
+  TextField,
+} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useAsyncMutation } from "../../hooks/hooks.jsx";
+import {
+  useLazySearchUserQuery,
+  useSendFriendRequestMutation,
+} from "../../redux/api.js";
+import { setIsSearch } from "../../redux/reducers/misc.js";
+import UserItem from "../Shared/UserItem.jsx";
 
 const Search = () => {
-  const [searchValue, setSearchValue] = useState('');
-  const [users, setUsers] = useState(sampleUsers);
-  const [isLoadingSendFriendRequest, setIsLoadingSendFriendRequest] = useState(false);
+  const { isSearch } = useSelector((state) => state.misc);
 
-  const handleSearchChange = (event) => {
-    setSearchValue(event.target.value);
-    // Here you might want to filter users based on the search input
+  const [searchUser] = useLazySearchUserQuery();
+
+  const [sendFriendRequest, isLoadingSendFriendRequest] = useAsyncMutation(
+    useSendFriendRequestMutation
+  );
+
+  const dispatch = useDispatch();
+
+  const search = useInputValidation("");
+
+  const [users, setUsers] = useState([]);
+
+  const addFriendHandler = async (id) => {
+    await sendFriendRequest("Sending friend request...", { userId: id });
   };
 
-  const addFriendHandler = (id) => {
-    console.log(id);
-    // Add logic for adding a friend
-  };
+  const searchCloseHandler = () => dispatch(setIsSearch(false));
+
+  useEffect(() => {
+    const timeOutId = setTimeout(() => {
+      if(!search.value==""){
+        searchUser(search.value)
+        .then(({ data }) => setUsers(data.users))
+        .catch((e) => console.log(e));
+      }
+    }, 1000);
+
+    return () => {
+      clearTimeout(timeOutId);
+    };
+  }, [search.value]);
 
   return (
-    <Dialog open>
-      <Stack padding={'2rem'} width={'25rem'} direction={'column'}>
-        <DialogTitle textAlign={'center'}>Find People</DialogTitle>
+    <Dialog open={isSearch} onClose={searchCloseHandler}>
+      <Stack p={"2rem"} direction={"column"} width={"25rem"}>
+        <DialogTitle textAlign={"center"}>Find People</DialogTitle>
         <TextField
           label=""
-          value={searchValue}
-          onChange={handleSearchChange}
+          value={search.value}
+          onChange={search.changeHandler}
           variant="outlined"
           size="small"
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchRounded />
+                <SearchIcon />
               </InputAdornment>
-            )
+            ),
           }}
         />
+
         <List>
-          {users.map((user) => (
+          {users.map((i) => (
             <UserItem
-              key={user._id}
-              user={user}
+              user={i}
+              key={i._id}
               handler={addFriendHandler}
               handlerIsLoading={isLoadingSendFriendRequest}
             />

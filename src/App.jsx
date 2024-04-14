@@ -22,16 +22,13 @@ const Dashboard=lazy(()=> import("./pages/Admin/Dashboard"))
 const App = () => {
 const dispatch= useDispatch()
  const { user, loader } = useSelector((state) => state.auth);
-  useEffect(()=>{
-    console.log(server)
-    axios.get(`${server}/user/userprofile`,{withCredentials:true})
-    .then(({data})=>{
-      console.log(data)
-      dispatch(userExists(data.user))
-    })
-    .catch((err)=>dispatch(userNotExists()))
-    
-  },[dispatch])
+ useEffect(() => {
+  axios
+    .get(`${server}/user/userprofile`, { withCredentials: true })
+    .then(({ data }) => dispatch(userExists(data)))
+    .catch((err) => dispatch(userNotExists()));
+}, [dispatch]);
+
   return loader ? <LayoutLoader/> : (
     <BrowserRouter>
      <Suspense fallback={<div><LayoutLoader/></div>}>
