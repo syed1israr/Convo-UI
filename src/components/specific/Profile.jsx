@@ -2,21 +2,24 @@ import React from 'react';
 import { Avatar, Stack, Typography } from '@mui/material';
 import { Face as FaceIcon, AlternateEmail as UsernameIcon, CalendarMonth as CalendarIcon } from "@mui/icons-material";
 import moment from "moment";
-
-const Profile = () => {
+import { transoformImage } from '../../lib/Features'
+const Profile = ({user}) => {
+    
     return (
         <Stack spacing={"2rem"} direction={"column"} alignItems={"center"}>
-            <Avatar sx={{
+            <Avatar src={ transoformImage(user?.data?.avatar?.url)}
+            
+            sx={{
                 width: 200,
                 height: 200,
                 objectFit: "contain",
                 marginBottom: "1rem",
                 border: "5px solid white"
             }} />
-            <ProfileCard heading={"bio"} text={"Full Stack Web Developer"} />
-            <ProfileCard heading={"Username"} text={"syed_fara.z"} Icon={UsernameIcon} />
-            <ProfileCard heading={"name"} text={"Syed Israr Ahmed"} Icon={FaceIcon} />
-            <ProfileCard heading={"Joined"} text={moment('2023-11-04T18:30:00.000Z').fromNow()} Icon={CalendarIcon} />
+            <ProfileCard heading={"bio"} text={user?.data?.bio} />
+            <ProfileCard heading={"Username"} text={user?.data?.username} Icon={UsernameIcon} />
+            <ProfileCard heading={"name"} text={user?.data?.name} Icon={FaceIcon} />
+            <ProfileCard heading={"Joined"} text={moment(user?.data?.createdAt).fromNow()} Icon={CalendarIcon} />
         </Stack>
     );
 };

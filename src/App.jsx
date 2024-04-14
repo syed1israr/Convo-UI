@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { userExists, userNotExists } from "../src/redux/reducers/auth.js";
 import ProtectRoute from './components/Auth/ProtectRoute';
 import { LayoutLoader } from './components/Layout/Loaders';
+import { SocketProvider} from "./socket.jsx"
 import { server } from "./constants/config.js";
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
@@ -33,7 +34,9 @@ const dispatch= useDispatch()
     <BrowserRouter>
      <Suspense fallback={<div><LayoutLoader/></div>}>
      <Routes>
-        <Route element={<ProtectRoute user={user}/>}>
+        <Route element={<SocketProvider>
+          <ProtectRoute user={user}/>
+        </SocketProvider>}>
           <Route path='/' element={<Home />} />
           <Route path='/chat/:chatId' element={<Chat />} />
           <Route path='/groups' element={<Groups />} />

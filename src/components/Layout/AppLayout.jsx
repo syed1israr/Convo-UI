@@ -10,6 +10,7 @@ import Profile from '../specific/Profile';
 import Header from './Header';
 import toast from 'react-hot-toast';
 import { useErrors } from '../../hooks/hooks.jsx';
+import { getSocket } from '../../socket.jsx';
 
 const AppLayout = (WrappedComponent) => {
     const AppLayoutComponent = (props) => {
@@ -17,10 +18,12 @@ const AppLayout = (WrappedComponent) => {
         const chatId = params.chatId;
         const dispatch = useDispatch();
         const { isMobile } = useSelector(state => state.misc);
+        const { user } = useSelector(state => state.auth);
         const { isLoading, data, isError, error, refetch } = useMyChatsQuery("");
 
         useErrors([{isError, error}])
-
+        const socket=getSocket()
+        console.log(socket.id)
         const handleDeleteChat = (e, _id, groupchat) => {
             e.preventDefault();
             console.log("delete Chat", _id, groupchat);
@@ -53,7 +56,7 @@ const AppLayout = (WrappedComponent) => {
                         <WrappedComponent {...props} />
                     </Grid>
                     <Grid item md={4} lg={3} sx={{ display: { xs: "none", md: "block" }, padding: "2rem", bgcolor: "rgba(0,0,0,0.85)" }} height={"100%"}>
-                        <Profile />
+                        <Profile user={user} />
                     </Grid>
                 </Grid>
             </>
