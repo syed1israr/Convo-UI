@@ -16,6 +16,7 @@ import {
   useGetNotificationsQuery,
 } from "../../redux/api";
 import { setIsNotification } from "../../redux/reducers/misc";
+import { transoformImage } from "../../lib/Features";
 
 const Notifications = () => {
   const { isNotification } = useSelector((state) => state.misc);
@@ -73,7 +74,7 @@ const NotificationItem = memo(({ sender, _id, handler }) => {
         spacing={"1rem"}
         width={"100%"}
       >
-        <Avatar src={avatar} />
+        <Avatar src={transoformImage(avatar)} />
 
         <Typography
           variant="body1"
