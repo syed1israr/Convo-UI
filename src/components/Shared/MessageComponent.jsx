@@ -5,9 +5,10 @@ import moment from 'moment'
 import {fileFormat} from '../../lib/Features'
 import RenderContent from './RenderContent'
 
-const MessageComponent = ({message,user}) => {
+const MessageComponent = ({message, user}) => {
     const {sender, content ,attachments,createdAt}=message
-    const sameSender=sender?._id===user?._id
+    const sameSender=sender?._id===user.data._id
+    console.log(sender?._id ,"userID",user.data._id)
     const timeAgo=moment(createdAt).fromNow()
   return (
     <div
@@ -27,7 +28,7 @@ const MessageComponent = ({message,user}) => {
         {
             content && <Typography>{content}</Typography>
         }
-        {attachments.length>0 && 
+        {attachments?.length>0 && 
         (
             attachments.map((attachment,index)=>{
                 const url=attachment.url;
