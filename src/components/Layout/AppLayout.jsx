@@ -11,6 +11,7 @@ import Header from './Header';
 import toast from 'react-hot-toast';
 import { useErrors } from '../../hooks/hooks.jsx';
 import { getSocket } from '../../socket.jsx';
+import { sampleChats } from '../../constants/SampleData.js';
 
 const AppLayout = (WrappedComponent) => {
     const AppLayoutComponent = (props) => {
@@ -20,8 +21,10 @@ const AppLayout = (WrappedComponent) => {
         const { isMobile } = useSelector(state => state.misc);
         const { user } = useSelector(state => state.auth);
         const { isLoading, data, isError, error, refetch } = useMyChatsQuery("");
+        
 
-        useErrors([{isError, error}])
+        console.log("usemyChats ke Baad",data)
+        useErrors([{ isError, error }]);
         const socket=getSocket()
         console.log(socket.id)
         const handleDeleteChat = (e, _id, groupchat) => {
@@ -49,7 +52,7 @@ const AppLayout = (WrappedComponent) => {
                 <Grid container style={{ height: "calc(100vh - 4rem)" }}>
                     <Grid item sm={4} md={3} sx={{ display: { xs: "none", sm: "block" } }} height={"100%"}>
                         {isLoading ? (<Skeleton />) : (
-                            <ChatList chats={data?.chats} chatId={chatId} handleDeletChat={handleDeleteChat} />
+                            <ChatList chats={data?.chats}  chatId={chatId} handleDeletChat={handleDeleteChat} />
                         )}
                     </Grid>
                     <Grid item xs={12} sm={8} md={5} lg={6} height={"100%"}>
