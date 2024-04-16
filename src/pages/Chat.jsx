@@ -19,7 +19,7 @@ import { TypingLoader } from "../components/Layout/Loaders";
 
 const Chat = ({ chatId }) => {
     
-   
+  const socket = getSocket();
   const containerref = useRef(null);
   const bottomRef = useRef(null);
   const dispatch=useDispatch()
@@ -27,14 +27,15 @@ const Chat = ({ chatId }) => {
   const [messages, setMessages] = useState([]);
   const [page, setpage] = useState(1);
   const [fileMenuAnchor, setfileMenuAnchor] = useState(null);
-
+  const { user } = useSelector(state => state.auth);
   const chatDetails = useChatDetailsQuery({ chatId, skip: !chatId });
 
   const  oldMEssagesChunk = useGetMessagesQuery({chatId,page})
   
   const [IamTyping, setIamTyping] = useState(false);
-  const [userTyping, setUserTyping] = useState(true);
+  const [userTyping, setUserTyping] = useState(false);
   const typingTimeout = useRef(null);
+
   const { data: oldMessages, setData: setOldMessages } = useInfiniteScrollTop(
     containerref,
     oldMEssagesChunk.data?.totalPages,
@@ -42,20 +43,17 @@ const Chat = ({ chatId }) => {
     setpage,
     oldMEssagesChunk.data?.messages
   );
-  
+
   const errors = [
     { isError: chatDetails.isError, error: chatDetails.error },
-    { isError: oldMEssagesChunk.isError, error: oldMEssagesChunk.error }
+    { isError: oldMEssagesChunk.isError, error: oldMEssagesChunk.error },
   ];
+
   const members = chatDetails?.data?.chat?.members;
-  
- 
-  const { user } = useSelector(state => state.auth);
-console.log("userTyping",userTyping)
-  const socket = getSocket();
+
   const messageOnChange = (e) => {
     setMessage(e.target.value);
-    
+
     if (!IamTyping) {
       socket.emit(START_TYPING, { members, chatId });
       setIamTyping(true);
@@ -67,16 +65,20 @@ console.log("userTyping",userTyping)
       socket.emit(STOP_TYPING, { members, chatId });
       setIamTyping(false);
     }, [2000]);
-  };
-  const handleFileOpen = (e)=>{
-    dispatch(setIsFileMenu(true))
-    setfileMenuAnchor(e.currentTarget)
   }
+
+  const handleFileOpen = (e) => {
+    dispatch(setIsFileMenu(true));
+    setfileMenuAnchor(e.currentTarget);
+  };
+
+
   const submitHandler = (e) => {
     e.preventDefault();
-    if (!message.trim()) {
-      return;
-    }
+
+    if (!message.trim()) return;
+
+    // Emitting the message to the server
     socket.emit(NEW_MESSAGE, { chatId, members, message });
     setMessage("");
   };
@@ -93,6 +95,8 @@ console.log("userTyping",userTyping)
       socket.emit(CHAT_LEAVED, { userId: user._id, members });
     };
   }, [chatId]);
+
+  
   useEffect(() => {
     if (bottomRef.current)
       bottomRef.current.scrollIntoView({ behavior: "smooth" });
@@ -102,39 +106,37 @@ console.log("userTyping",userTyping)
     if (chatDetails.isError) return navigate("/");
   }, [chatDetails.isError]);
 
-  const startTypingListener = useCallback(
-    (data) => {
-      if (data.chatId !== chatId) return;
-      console.log("startTypingListener's Data",data)
-      setUserTyping(true);
-    },
-    [chatId]
-  );
-  console.log("2.itna chala",chatId)
-  const stopTypingListener = useCallback(
-    (data) => {
-      console.log("1.itna chala")
-      console.log("2.itna chala", data.chatId)
-  c
-      if (data.chatId !== chatId) return;
-      console.log("Typings Data",data)
-      setUserTyping(false);
-    },
-    [chatId]
-  );
   const newMessagesListener = useCallback(
     (data) => {
       if (data.chatId !== chatId) return;
-      console.log("newMessagesListener's Data",data)
+
       setMessages((prev) => [...prev, data.message]);
     },
     [chatId]
   );
+
+  const startTypingListener = useCallback(
+    (data) => {
+      if (data.chatId !== chatId) return;
+
+      setUserTyping(true);
+    },
+    [chatId]
+  );
+
+  const stopTypingListener = useCallback(
+    (data) => {
+      if (data.chatId !== chatId) return;
+      setUserTyping(false);
+    },
+    [chatId]
+  );
+
   const alertListener = useCallback(
     (data) => {
       if (data.chatId !== chatId) return;
       const messageForAlert = {
-        content: data,
+        content: data.message,
         sender: {
           _id: "djasdhajksdhasdsadasdas",
           name: "Admin",
@@ -147,7 +149,7 @@ console.log("userTyping",userTyping)
     },
     [chatId]
   );
-  socket.on(START_TYPING, startTypingListener);
+
   const eventHandler = {
     [ALERT]: alertListener,
     [NEW_MESSAGE]: newMessagesListener,
@@ -155,12 +157,11 @@ console.log("userTyping",userTyping)
     [STOP_TYPING]: stopTypingListener,
   };
 
-  
-
-
   useSocketEvents(socket, eventHandler);
-  useErrors(errors)
-  const allmessages=[...oldMessages,...messages]
+
+  useErrors(errors);
+
+  const allMessages = [...oldMessages, ...messages];
 
   return chatDetails.isLoading ? <Skeleton /> : (
     <>
@@ -176,7 +177,7 @@ console.log("userTyping",userTyping)
           overflowY: "auto"
         }}
       >
-        {!allmessages.isLoading &&  allmessages.map((i) => (
+        {!allMessages.isLoading &&  allMessages.map((i) => (
           <MessageComponent key={i._id} message={i} user={user} />
         ))}
         {userTyping && <TypingLoader />}
