@@ -16,6 +16,8 @@ import { setIsFileMenu } from '../redux/reducers/misc';
 
 
 const Chat = ({ chatId }) => {
+    
+   
   const containerref = useRef(null);
   const dispatch=useDispatch()
   const [message, setMessage] = useState("");
@@ -27,7 +29,7 @@ const Chat = ({ chatId }) => {
 
   const  oldMEssagesChunk = useGetMessagesQuery({chatId,page})
   
-  
+
   const { data: oldMessages, setData: setOldMessages } = useInfiniteScrollTop(
     containerref,
     oldMEssagesChunk.data?.totalPages,
@@ -43,7 +45,7 @@ const Chat = ({ chatId }) => {
   const members = chatDetails?.data?.chat?.members;
 
   const { user } = useSelector(state => state.auth);
-
+console.log(user)
   const socket = getSocket();
 
   const handleFileOpen = (e)=>{
@@ -117,7 +119,7 @@ const Chat = ({ chatId }) => {
             <SendAndArchiveRoundedIcon />
           </IconButton>
         </Stack>
-        <FileMenu anchorE1={fileMenuAnchor} />
+        <FileMenu anchorE1={fileMenuAnchor}  chatId={chatId}/>
       </form>
     </>
   );

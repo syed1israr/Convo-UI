@@ -13,7 +13,7 @@ import { useSendAttachmentsMutation } from "../../redux/api";
 
 const FileMenu = ({ anchorE1, chatId }) => {
   const { isFileMenu } = useSelector((state) => state.misc);
-
+ 
   const dispatch = useDispatch();
 
   const imageRef = useRef(null);
@@ -50,7 +50,7 @@ const FileMenu = ({ anchorE1, chatId }) => {
       files.forEach((file) => myForm.append("files", file));
 
       const res = await sendAttachments(myForm);
-
+        console.log(res)
       if (res.data) toast.success(`${key} sent successfully`, { id: toastId });
       else toast.error(`Failed to send ${key}`, { id: toastId });
 

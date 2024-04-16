@@ -2,12 +2,12 @@ import React from 'react';
 import { Avatar, Stack, Typography } from '@mui/material';
 import { Face as FaceIcon, AlternateEmail as UsernameIcon, CalendarMonth as CalendarIcon } from "@mui/icons-material";
 import moment from "moment";
-import { transoformImage } from '../../lib/Features'
+// import { transoformImage } from '../../lib/Features'
 const Profile = ({user}) => {
     
     return (
         <Stack spacing={"2rem"} direction={"column"} alignItems={"center"}>
-            <Avatar src={ transoformImage(user?.data?.avatar?.url)}
+            <Avatar src={ user?.data?.avatar?.url}
             
             sx={{
                 width: 200,

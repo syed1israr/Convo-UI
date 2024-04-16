@@ -7,7 +7,12 @@ const fileFormat = (url = "") => {
     if (fileExtension === "png" || fileExtension === "jpeg" || fileExtension === "gif" || fileExtension === "jpg") return "image";
     return "file"; // Corrected returning "file" instead of file
 }
-const transoformImage= (url = "",width=100)=>url;
+const transoformImage= (url = "",width=100)=>
+{
+    const newUrl = url.replace("upload/", `upload/dpr_auto/w_${width}/`);
+  
+    return newUrl;
+};
 const getLast7Days=()=>{
     const currentdate=moment();
     const last7Days=[];
@@ -17,5 +22,8 @@ const getLast7Days=()=>{
     }
     return last7Days;
 }
+const transformImage = (url = "", width = 100) => {
+    
+  };
 
 export { fileFormat ,transoformImage,getLast7Days};
