@@ -15,6 +15,7 @@ const ChatItem = ({
   index = 0,
   handleDeleteChat,
 }) => {
+  console.log("newMessageAlert ChatItem wala",newMessageAlert)
   return (
     <StyledLink
       sx={{
@@ -41,7 +42,7 @@ const ChatItem = ({
 
         <Stack>
           <Typography>{name}</Typography>
-          {newMessageAlert && (
+          { newMessageAlert && (
             <Typography>{newMessageAlert.count} New Message</Typography>
           )}
         </Stack>

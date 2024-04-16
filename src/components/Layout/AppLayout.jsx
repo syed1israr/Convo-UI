@@ -22,19 +22,19 @@ const AppLayout = (WrappedComponent) => {
         const { isMobile } = useSelector(state => state.misc);
         const { user } = useSelector(state => state.auth);
         const { newMessagesAlert } = useSelector((state) => state.chat);
+        console.log(newMessagesAlert)
         const params = useParams();
         const chatId = params.chatId;
+        console.log("chatId applayout wala ",chatId)
             console.log("Nes Message ALer",newMessagesAlert)
         // Fetching chats
         const { isLoading, data, isError, error, refetch } = useMyChatsQuery("");
         
         // Error handling
         useErrors([{ isError, error }]);
-        useEffect(()=>{
-
-                getOrSaveFromStorage({key:NEW_MESSAGE_ALERT,value:newMessagesAlert})
-
-        },[newMessagesAlert])
+        useEffect(() => {
+            getOrSaveFromStorage({ key: NEW_MESSAGE_ALERT, value: newMessagesAlert });
+          }, [newMessagesAlert]);
         // Socket initialization
         const socket = getSocket();
         
@@ -50,14 +50,14 @@ const AppLayout = (WrappedComponent) => {
             dispatch(setIsMobile(false));
         };
         const newMessageAlertListener=useCallback((data)=>{
-            console.log(data)
+            
             if(data.chatId===chatId){
                 return
             }
             dispatch(setNewMessagesAlert(data))
             
         },[chatId])
-
+        
 
         const newRequestAlertListener=useCallback(()=>{
             dispatch(incrementNotification())
@@ -69,7 +69,9 @@ const AppLayout = (WrappedComponent) => {
           };
         
           useSocketEvents(socket, eventHandlers);
-         
+          
+          
+          
         return (
             <>
                 <Title />
@@ -98,6 +100,7 @@ const AppLayout = (WrappedComponent) => {
                                 chats={data?.chats}
                                 chatId={chatId}
                                 handleDeletChat={handleDeleteChat}
+                                newMessagesAlert={newMessagesAlert}
                             />
                         )}
                     </Grid>
