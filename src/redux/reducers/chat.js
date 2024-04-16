@@ -10,7 +10,7 @@ const initialState = {
   }) || [
     {
       chatId: "",
-      count: 0,
+      count: 100,
     },
   ],
 };
@@ -28,7 +28,7 @@ const chatSlice = createSlice({
 
     setNewMessagesAlert: (state, action) => {
       const chatId = action.payload.chatId;
-
+      console.log(chatId)
       const index = state.newMessagesAlert.findIndex(
         (item) => item.chatId === chatId
       );

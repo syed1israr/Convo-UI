@@ -16,7 +16,7 @@ const ChatList = ({w="100%",chats=[],chatId=[],onlineUsers=[],newMessagesAlert=[
         {
             chats?.map((data, index )=>{
                const { avatar,_id,name,groupChat,members}=data;
-                console.log(avatar)
+            
                const newMessageAlert=newMessagesAlert.find(
                ({chatId})=> chatId===_id
                )

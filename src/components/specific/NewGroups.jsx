@@ -26,7 +26,7 @@ const NewGroups = () => {
     );
   };
   
-  console.log(selectedMembers);
+  
 
   const submitHandler = () => {
     // Add your logic for submitting the form here

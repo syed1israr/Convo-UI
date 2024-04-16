@@ -1,18 +1,19 @@
 import { AttachFile as AttachFileIcon, SendAndArchiveRounded as SendAndArchiveRoundedIcon } from '@mui/icons-material';
 import { IconButton, Skeleton, Stack } from '@mui/material';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AppLayout from '../components/Layout/AppLayout';
 import MessageComponent from '../components/Shared/MessageComponent';
 import { InputBox } from '../components/Styles/StyledComponent';
 import FileMenu from '../components/dialogs/FileMenu';
 import { CustomeGray, orange } from '../constants/Color';
-import { NEW_MESSAGE } from "../constants/events";
+import { CHAT_LEAVED, NEW_MESSAGE, START_TYPING, STOP_TYPING } from "../constants/events";
 import { useErrors, useSocketEvents } from '../hooks/hooks';
 import { useChatDetailsQuery, useGetMessagesQuery } from '../redux/api';
 import { getSocket } from '../socket';
 import { useInfiniteScrollTop } from "6pp"
 import { setIsFileMenu } from '../redux/reducers/misc';
+import { removeNewMessagesAlert } from '../redux/reducers/chat';
 
 
 const Chat = ({ chatId }) => {
@@ -29,7 +30,9 @@ const Chat = ({ chatId }) => {
 
   const  oldMEssagesChunk = useGetMessagesQuery({chatId,page})
   
-
+  const [IamTyping, setIamTyping] = useState(false);
+  const [userTyping, setUserTyping] = useState(false);
+  const typingTimeout = useRef(null);
   const { data: oldMessages, setData: setOldMessages } = useInfiniteScrollTop(
     containerref,
     oldMEssagesChunk.data?.totalPages,
@@ -45,9 +48,25 @@ const Chat = ({ chatId }) => {
   const members = chatDetails?.data?.chat?.members;
 
   const { user } = useSelector(state => state.auth);
-console.log(user)
+
   const socket = getSocket();
 
+
+  const messageOnChange = (e) => {
+    setMessage(e.target.value);
+
+    if (!IamTyping) {
+      socket.emit(START_TYPING, { members, chatId });
+      setIamTyping(true);
+    }
+
+    if (typingTimeout.current) clearTimeout(typingTimeout.current);
+
+    typingTimeout.current = setTimeout(() => {
+      socket.emit(STOP_TYPING, { members, chatId });
+      setIamTyping(false);
+    }, [2000]);
+  };
   const handleFileOpen = (e)=>{
     dispatch(setIsFileMenu(true))
     setfileMenuAnchor(e.currentTarget)
@@ -61,12 +80,48 @@ console.log(user)
     setMessage("");
   };
 
-  const newMessageListener = (data) => {
-    setMessages(prev => [...prev, data.message]);
-  };
+  useEffect(() => {
+    // socket.emit(CHAT_JOINED, { userId: user._id, members });
+    dispatch(removeNewMessagesAlert(chatId));
+
+    return () => {
+      setMessages([]);
+      setMessage("");
+      setOldMessages([]);
+      setpage(1);
+      socket.emit(CHAT_LEAVED, { userId: user._id, members });
+    };
+  }, [chatId]);
+
+  const startTypingListener = useCallback(
+    (data) => {
+      if (data.chatId !== chatId) return;
+      console.log("Start Typing")
+      setUserTyping(true);
+    },
+    [chatId]
+  );
+  const stopTypingListener = useCallback(
+    (data) => {
+      if (data.chatId !== chatId) return;
+        console.log("Stop Typing")
+      setUserTyping(false);
+    },
+    [chatId]
+  );
+  const newMessagesListener = useCallback(
+    (data) => {
+      if (data.chatId !== chatId) return;
+
+      setMessages((prev) => [...prev, data.message]);
+    },
+    [chatId]
+  );
   
   const eventHandler = {
-    [NEW_MESSAGE]: newMessageListener
+    [NEW_MESSAGE]: newMessagesListener,
+    [START_TYPING]: startTypingListener,
+    [STOP_TYPING]: stopTypingListener,
   };
 
   useSocketEvents(socket, eventHandler);
@@ -105,7 +160,7 @@ console.log(user)
           </IconButton>
           <InputBox
             value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            onChange={messageOnChange}
             placeholder='Type Message Here...'
           />
           <IconButton type='submit' sx={{
