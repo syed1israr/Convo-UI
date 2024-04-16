@@ -4,17 +4,32 @@ import { useNavigate ,useSearchParams } from 'react-router-dom';
 import { Add as AddIcon, Delete as DeleteIcon, Done, Edit as EditIcon, KeyboardBackspaceOutlined, Menu } from '@mui/icons-material';
 import { StyledLink } from '../components/Styles/StyledComponent';
 import AvatarCard from '../components/Shared/AvatarCard';
-import { sampleChats, sampleUsers } from '../constants/SampleData';
+
 import UserItem from '../components/Shared/UserItem';
+
+
+import { useChatDetailsQuery, useMyGroupsQuery, useRenameGroupMutation } from "../redux/api.js"
+import { useAsyncMutation, useErrors } from "../hooks/hooks.jsx"
+import { LayoutLoader } from "../components/Layout/Loaders.jsx"
 const ConfirmDeleteDialoge=lazy(()=>import("../components/dialogs/ConfirmDeleteDialoge"))
 const AddMemberDialoge=lazy(()=>import("../components/dialogs/AddMemberDialoge"))
+
 const Groups = () => {
   const navigate = useNavigate();
   const navigateBack = () => {
     navigate("/");
   };
-
   const chatId = useSearchParams()[0].get("group");
+
+
+  const myGroups=useMyGroupsQuery("")
+  const groupDetails=useChatDetailsQuery({chatId,populate:true}
+  ,{skip:!chatId})
+    const [ updatedGroup , isLoadingGroupName ]=useAsyncMutation(useRenameGroupMutation)
+
+
+  console.log(groupDetails.data)
+  
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isEdit, setisEdit] = useState(false);
@@ -22,6 +37,33 @@ const Groups = () => {
   const [groupnameUpdatedValue,setgroupnameUpdatedValue]=useState("");
   const [confirmDeletedialoge,setconfirmDeletedialoge]=useState(false)
   const [ismember, setismember] = useState(false)
+  const [members,setmembers]=useState([])
+  const errors=[
+   {
+    isError:myGroups.isError,
+    error:myGroups.error
+   },
+   {
+    isError:groupDetails.isError,
+    error:groupDetails.error
+   },
+
+  ]
+  useErrors(errors)
+
+  useEffect(()=>{
+    if(groupDetails.data){
+      setgroupname(groupDetails.data.chat.name)
+      setgroupnameUpdatedValue(groupDetails.data.chat.name)
+      setmembers(groupDetails?.data?.chat?.members)
+    }
+    return ()=>{
+      setgroupname("")
+      setgroupnameUpdatedValue("")
+      setmembers([])
+      setisEdit(false)
+    }
+  },[groupDetails])
 
   const handleMobile = () => {
     setIsMobileMenuOpen(prev => !prev);
@@ -32,10 +74,12 @@ const Groups = () => {
   };
 
   const updateGroupNamehandler = () => {
-    setgroupname(groupnameUpdatedValue);
-
+    updatedGroup("updating Group name",{
+      chatId,
+      name:groupnameUpdatedValue,
+    })
     setisEdit(false);
-    console.log("Group name updated", groupnameUpdatedValue);
+    
   };
   
   const openconfirmDeleteHandler=()=>{
@@ -94,12 +138,14 @@ const Groups = () => {
       {isEdit ? (
         <>
           <TextField  value={groupnameUpdatedValue}  onChange={e => setgroupnameUpdatedValue(e.target.value)} />
-          <IconButton onClick={updateGroupNamehandler}><Done /></IconButton>
+          <IconButton
+          disabled={isLoadingGroupName}
+          onClick={updateGroupNamehandler}><Done /></IconButton>
         </>
       ) : (
         <>
           <Typography variant='h4'>{groupname}</Typography>
-          <IconButton onClick={() => setisEdit(true)}><EditIcon /></IconButton>
+          <IconButton disabled={isLoadingGroupName}  onClick={() => setisEdit(true)}><EditIcon /></IconButton>
         </>
       )}
     </Stack>
@@ -140,7 +186,7 @@ const Groups = () => {
     </Stack>
   );
 
-  return (
+  return myGroups.isLoading? <LayoutLoader/> :  (
     <Grid container style={{ height: '100vh'}}>
      <Grid
         item
@@ -152,7 +198,7 @@ const Groups = () => {
           },
         }}
       >
-        <GroupList myGroups={sampleChats} chatId={chatId} />
+        <GroupList myGroups={ myGroups?.data?.groups} chatId={chatId} />
       </Grid>
       <Grid
         item
@@ -186,7 +232,7 @@ const Groups = () => {
               overflow={"auto"}
             >
               {
-                sampleUsers.map((user)=>(
+                members.map((user)=>(
                   <UserItem user={user} key={user._id} isAdded
                   styling={{
                     boxShadow:"0 0 0.8rem rgba(0,0,0,0.2) ",
@@ -217,7 +263,7 @@ const Groups = () => {
         </>
       }
       <Drawer open={isMobileMenuOpen} onClose={handleMobileClose}>
-        <GroupList myGroups={sampleChats} w={"50vw"} />
+        <GroupList myGroups={myGroups?.data?.groups} w={"50vw"} />
       </Drawer>
     </Grid>
   );

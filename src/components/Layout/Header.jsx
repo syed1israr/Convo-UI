@@ -10,6 +10,7 @@ import { server } from "../../constants/config.js";
 import { userNotExists } from "../../redux/reducers/auth.js";
 import { setIsMobile, setIsNotification, setIsSearch } from '../../redux/reducers/misc.js';
 import { resetNotificationCount } from '../../redux/reducers/chat.js';
+import { setIsNewGroup } from '../../redux/reducers/misc.js';
 
 // Lazy-loaded components
 const SearchDialog = lazy(() => import('../specific/Search'));
@@ -21,7 +22,10 @@ const Header = () => {
   const { isSearch } = useSelector(state=>state.misc)
   const { isNotification } = useSelector(state=>state.misc)
   const { notificationCount } = useSelector(state=>state.chat)
-  const [isNewGroup, setIsNewGroup] = useState(false);
+  const { IsNewGroup } = useSelector(state=>state.misc)
+  const a=IsNewGroup
+  const b=setIsNewGroup
+  console.log("A",a,"B",b)
   
   const dispatch=useDispatch()
   const handleMobile = () => {
@@ -33,7 +37,7 @@ const Header = () => {
   };
 
   const openNewGroup = () => {
-    setIsNewGroup(!isNewGroup);
+    dispatch(setIsNewGroup(true))
   };
 
   const logoutHandler = async () => {
@@ -92,7 +96,7 @@ const Header = () => {
           <NotificationDialog />
         </Suspense>
       )}
-      {isNewGroup && (
+      {IsNewGroup && (
         <Suspense fallback={<Backdrop open/>}>
           <NewGroupDialog />
         </Suspense>
