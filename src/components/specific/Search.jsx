@@ -44,7 +44,7 @@ const Search = () => {
       if(!search.value==""){
         searchUser(search.value)
         .then(({ data }) => setUsers(data.users))
-        .catch((e) => console.log(e));
+        
       }
     }, 1000);
 

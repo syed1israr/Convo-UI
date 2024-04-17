@@ -1,8 +1,8 @@
+import { Box, Stack, Typography } from "@mui/material";
+import { motion } from "framer-motion";
 import React, { memo } from "react";
 import { StyledLink } from "../Styles/StyledComponent";
-import { Box, Stack, Typography } from "@mui/material";
 import AvatarCard from "./AvatarCard";
-import { motion } from "framer-motion";
 
 const ChatItem = ({
   avatar = [],
@@ -15,7 +15,7 @@ const ChatItem = ({
   index = 0,
   handleDeleteChat,
 }) => {
-  console.log("newMessageAlert ChatItem wala",newMessageAlert)
+
   return (
     <StyledLink
       sx={{

@@ -11,12 +11,12 @@ import {
 import React, { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAsyncMutation, useErrors } from "../../hooks/hooks";
+import { transoformImage } from "../../lib/Features";
 import {
   useAcceptFriendRequestMutation,
   useGetNotificationsQuery,
 } from "../../redux/api";
 import { setIsNotification } from "../../redux/reducers/misc";
-import { transoformImage } from "../../lib/Features";
 
 const Notifications = () => {
   const { isNotification } = useSelector((state) => state.misc);

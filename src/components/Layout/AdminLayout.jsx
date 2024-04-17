@@ -54,7 +54,7 @@ const admintabs = [
 const Sidebar = ({ w = "100%" }) => {
   const location = useLocation();
   const logOuthandler=()=>{
-    console.log("logOuthandler")
+  
   }
   return (
     <Stack width={w} direction="column" p="3rem" spacing="3rem">

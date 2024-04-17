@@ -1,7 +1,8 @@
-import React from 'react';
+import { CalendarMonth as CalendarIcon, Face as FaceIcon, AlternateEmail as UsernameIcon } from "@mui/icons-material";
 import { Avatar, Stack, Typography } from '@mui/material';
-import { Face as FaceIcon, AlternateEmail as UsernameIcon, CalendarMonth as CalendarIcon } from "@mui/icons-material";
 import moment from "moment";
+import React from 'react';
+import { useSelector } from "react-redux";
 // import { transoformImage } from '../../lib/Features'
 const Profile = ({user}) => {
     

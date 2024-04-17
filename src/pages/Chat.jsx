@@ -3,7 +3,9 @@ import { AttachFile as AttachFileIcon, SendAndArchiveRounded as SendAndArchiveRo
 import { IconButton, Skeleton, Stack } from '@mui/material';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import AppLayout from '../components/Layout/AppLayout';
+import { TypingLoader } from "../components/Layout/Loaders";
 import MessageComponent from '../components/Shared/MessageComponent';
 import { InputBox } from '../components/Styles/StyledComponent';
 import FileMenu from '../components/dialogs/FileMenu';
@@ -14,7 +16,6 @@ import { useChatDetailsQuery, useGetMessagesQuery } from '../redux/api';
 import { removeNewMessagesAlert } from '../redux/reducers/chat';
 import { setIsFileMenu } from '../redux/reducers/misc';
 import { getSocket } from '../socket';
-import { TypingLoader } from "../components/Layout/Loaders";
 
 
 const Chat = ({ chatId }) => {
@@ -23,6 +24,7 @@ const Chat = ({ chatId }) => {
   const containerref = useRef(null);
   const bottomRef = useRef(null);
   const dispatch=useDispatch()
+  const navigate= useNavigate()
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [page, setpage] = useState(1);

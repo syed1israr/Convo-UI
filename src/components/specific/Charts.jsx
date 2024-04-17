@@ -1,6 +1,6 @@
+import { ArcElement, CategoryScale, Chart as ChartJS, Filler, Legend, LineElement, LinearScale, PointElement, Tooltip } from "chart.js";
 import React from 'react';
-import { Line, Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement, ArcElement, Filler, Tooltip, Legend } from "chart.js";
+import { Doughnut, Line } from 'react-chartjs-2';
 import { getLast7Days } from '../../lib/Features';
 
 ChartJS.register(
@@ -95,4 +95,5 @@ const DoughnutChart = ({ value = [], labels = [] }) => {
   );
 };
 
-export { LineChart, DoughnutChart };
+export { DoughnutChart, LineChart };
+

@@ -19,20 +19,20 @@ const ChatList = ({
     <Stack width={w} direction={"column"} overflow={"auto"} height={"100%"}>
       {chats?.map((data, index) => {
         const { avatar, _id, name, groupChat, members } = data;
-        console.log("chatId", chatId);
-        console.log("1.newMessagesAlert", newMessagesAlert, _id, chatId);
+       
+       
         const newMessageAlert = newMessagesAlert.find(
           (alert) => {
-            console.log("Comparing:", alert.chatId, _id.toString());
+            
             return alert.chatId === _id.toString();
           }
         );
-        console.log("2.newMessageAlert ChatList wala", newMessageAlert);
+       
 
         const isOnline = members?.some((member) =>
           onlineUsers.includes(member)
         );
-
+        
         return (
           <ChatItem
             index={index}

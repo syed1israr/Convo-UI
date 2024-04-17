@@ -1,6 +1,6 @@
-import React from 'react'
+import { FileOpen } from '@mui/icons-material';
+import React from 'react';
 import { transoformImage } from '../../lib/Features';
-import { FileOpen   } from '@mui/icons-material';
 
 const RenderContent = (file,url) => {
     switch (file) {

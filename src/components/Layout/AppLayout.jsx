@@ -1,20 +1,21 @@
 import { Drawer, Grid, Skeleton } from "@mui/material";
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useErrors, useSocketEvents } from '../../hooks/hooks.jsx';
 import { useMyChatsQuery } from '../../redux/api.js';
-import { setIsMobile } from '../../redux/reducers/misc.js';
+import { setIsDeleteMenu, setIsMobile, setSelectedDeleteChat } from '../../redux/reducers/misc.js';
 import { getSocket } from '../../socket.jsx';
 
+import { NEW_MESSAGE_ALERT, NEW_REQUEST_ALERT, REFETCH_CHATS } from "../../constants/events.js";
+import { getOrSaveFromStorage } from "../../lib/Features.js";
+import { incrementNotification, setNewMessagesAlert } from "../../redux/reducers/chat.js";
 import Title from '../Shared/Title';
+import DeleteChatMenu from "../dialogs/DeleteChatMenu.jsx";
 import ChatList from '../specific/ChatList';
 import Profile from '../specific/Profile';
 import Header from './Header';
-import { NEW_MESSAGE_ALERT, NEW_REQUEST_ALERT, REFETCH_CHATS } from "../../constants/events.js";
-import { incrementNotification, setNewMessagesAlert } from "../../redux/reducers/chat.js";
-import { getOrSaveFromStorage } from "../../lib/Features.js";
 
 const AppLayout = (WrappedComponent) => {
     const AppLayoutComponent = (props) => {
@@ -23,14 +24,13 @@ const AppLayout = (WrappedComponent) => {
         const { isMobile } = useSelector(state => state.misc);
         const { user } = useSelector(state => state.auth);
         const { newMessagesAlert } = useSelector((state) => state.chat);
-        console.log(newMessagesAlert)
+       
         const params = useParams();
         const chatId = params.chatId;
-        console.log("chatId applayout wala ",chatId)
-            console.log("Nes Message ALer",newMessagesAlert)
+       
         // Fetching chats
         const { isLoading, data, isError, error, refetch } = useMyChatsQuery("");
-        
+        const deleteMenuAnchor = useRef(null);
         // Error handling
         useErrors([{ isError, error }]);
         useEffect(() => {
@@ -41,10 +41,11 @@ const AppLayout = (WrappedComponent) => {
         
 
         // Handler for deleting a chat
-        const handleDeleteChat = (e, _id, groupchat) => {
-            e.preventDefault();
-            console.log("delete Chat", _id, groupchat);
-        };
+        const handleDeleteChat = (e, chatId, groupChat) => {
+            dispatch(setIsDeleteMenu(true));
+            dispatch(setSelectedDeleteChat({ chatId, groupChat }));
+            deleteMenuAnchor.current = e.currentTarget;
+          };
 
         // Handler for closing the mobile drawer
         const handleMobileClose = () => {
@@ -80,11 +81,15 @@ const AppLayout = (WrappedComponent) => {
           useSocketEvents(socket, eventHandlers);
           
           
-          
+         
         return (
             <>
                 <Title />
                 <Header />
+                <DeleteChatMenu
+                dispatch={dispatch}
+                deleteMenuAnchor={deleteMenuAnchor}
+             />
 
                 {isLoading ? (
                     <Skeleton />
@@ -94,7 +99,7 @@ const AppLayout = (WrappedComponent) => {
                             w="70vw"
                             chats={data?.chats}
                             chatId={chatId}
-                            handleDeletChat={handleDeleteChat}
+                            handleDeleteChat={handleDeleteChat}
                             newMessagesAlert={newMessagesAlert}
                         />
                     </Drawer>
@@ -108,7 +113,7 @@ const AppLayout = (WrappedComponent) => {
                             <ChatList
                                 chats={data?.chats}
                                 chatId={chatId}
-                                handleDeletChat={handleDeleteChat}
+                                handleDeleteChat={handleDeleteChat}
                                 newMessagesAlert={newMessagesAlert}
                             />
                         )}

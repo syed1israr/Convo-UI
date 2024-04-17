@@ -1,16 +1,15 @@
 import { AddCircleRounded as AddIcon, ChatBubbleRounded, Group as GroupIcon, LogoutRounded as LogoutRoundedIcon, Menu as MenuIcon, Notifications as NotificationsIcon, Search as SearchIcon } from '@mui/icons-material';
 import { AppBar, Backdrop, Badge, Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material';
 import axios from 'axios';
-import React, { Suspense, lazy, useState } from 'react';
+import React, { Suspense, lazy } from 'react';
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { orange } from '../../constants/Color';
 import { server } from "../../constants/config.js";
 import { userNotExists } from "../../redux/reducers/auth.js";
-import { setIsMobile, setIsNotification, setIsSearch } from '../../redux/reducers/misc.js';
 import { resetNotificationCount } from '../../redux/reducers/chat.js';
-import { setIsNewGroup } from '../../redux/reducers/misc.js';
+import { setIsMobile, setIsNewGroup, setIsNotification, setIsSearch } from '../../redux/reducers/misc.js';
 
 // Lazy-loaded components
 const SearchDialog = lazy(() => import('../specific/Search'));
@@ -25,7 +24,7 @@ const Header = () => {
   const { IsNewGroup } = useSelector(state=>state.misc)
   const a=IsNewGroup
   const b=setIsNewGroup
-  console.log("A",a,"B",b)
+  
   
   const dispatch=useDispatch()
   const handleMobile = () => {
@@ -42,7 +41,7 @@ const Header = () => {
 
   const logoutHandler = async () => {
  try {
-     console.log("User Loggin out")
+     
      const { data }= await  axios.get(`${server}/user/logout`,{
        withCredentials:true
      })

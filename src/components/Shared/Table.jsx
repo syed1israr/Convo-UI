@@ -1,6 +1,6 @@
-import React from 'react';
+import { Container, Paper, Typography } from '@mui/material';
 import { DataGrid } from "@mui/x-data-grid";
-import { Paper, Typography, Container } from '@mui/material';
+import React from 'react';
 
 const Table = ({ rows, columns, heading, rowheight = 52 }) => { // Fix typo in props
     return (
