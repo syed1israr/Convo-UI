@@ -52,7 +52,7 @@ const AppLayout = (WrappedComponent) => {
             deleteMenuAnchor.current = e.currentTarget;
           };
 
-        // Handler for closing the mobile drawer
+       
         const handleMobileClose = () => {
             dispatch(setIsMobile(false));
         };

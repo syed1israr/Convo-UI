@@ -9,7 +9,7 @@ import { TypingLoader } from "../components/Layout/Loaders";
 import MessageComponent from '../components/Shared/MessageComponent';
 import { InputBox } from '../components/Styles/StyledComponent';
 import FileMenu from '../components/dialogs/FileMenu';
-import { CustomeGray, orange } from '../constants/Color';
+import { CustomeGray, LightBlue, orange } from '../constants/Color';
 import { ALERT, CHAT_JOINED, CHAT_LEAVED, NEW_MESSAGE, START_TYPING, STOP_TYPING } from "../constants/events";
 import { useErrors, useSocketEvents } from '../hooks/hooks';
 import { useChatDetailsQuery, useGetMessagesQuery } from '../redux/api';
@@ -172,11 +172,17 @@ const Chat = ({ chatId }) => {
         boxSizing={"border-box"}
         padding={"1rem"}
         spacing={"1rem"}
-        bgcolor={CustomeGray}
+        // bgcolor={CustomeGray}
         height={"90%"}
         sx={{
           overflowX: "hidden",
-          overflowY: "auto"
+          overflowY: "auto",
+          backgroundImage: `url("https://img.freepik.com/free-vector/frame-t-with-green-bamboo_1308-38160.jpg?t=st=1713374653~exp=1713378253~hmac=d57d1185b70d699cf620adde60605cdb745b934165f6f1e4a3988c7267f7f42c&w=1380")`,
+          backgroundSize: "cover", // Use cover to make the image fit perfectly within the Stack
+          "&::-webkit-scrollbar": {
+            display: "none", // Hide the scrollbar in WebKit (Chrome, Safari, etc.)
+          },
+          scrollbarWidth: "none", // Hide the scrollbar in Firefox
         }}
       >
         {!allMessages.isLoading &&  allMessages.map((i) => (
@@ -187,7 +193,9 @@ const Chat = ({ chatId }) => {
 
       </Stack>
 
-      <form style={{ height: "10%" }} onSubmit={submitHandler}>
+      <form style={{ height: "10%" }} onSubmit={submitHandler}
+
+      >
         <Stack direction={"row"} height={"100%"} padding={"1rem"} alignItems={"center"} position={"relative"}>
           <IconButton 
             onClick={handleFileOpen}
@@ -206,7 +214,7 @@ const Chat = ({ chatId }) => {
             color: "white",
             padding: "0.5rem",
             "&:hover": {
-              bgcolor: "error.dark",
+              bgcolor: "rgba(0,0,0,0.85)",
             }
           }}>
             <SendAndArchiveRoundedIcon />

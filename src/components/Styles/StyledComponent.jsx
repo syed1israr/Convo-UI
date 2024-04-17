@@ -1,6 +1,6 @@
 import { Skeleton,keyframes, styled } from "@mui/material";
 import { Link as LinkComponent } from 'react-router-dom';
-import { CustomeGray } from "../../constants/Color";
+import { CustomeGray, LightBlue } from "../../constants/Color";
 
 export const VisuallyHiddenInput = styled("input")({
     border: 0,
@@ -30,7 +30,7 @@ height: 100%;
 border: none;
 outline : none;
 padding: 0 3rem;
-background-color: ${CustomeGray}
+background-color: ${LightBlue}
 
 `
 
