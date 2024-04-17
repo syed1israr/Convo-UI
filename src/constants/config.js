@@ -1,1 +1,1 @@
-export const server= import.meta.env.VITE_SERVER
+export const server= "https://chat-server-xjkk.onrender.com"
