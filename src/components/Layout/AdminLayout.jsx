@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { Link as LinkComponent, Navigate, useLocation } from "react-router-dom";
-import { grayColor, matBlack } from "../../constants/color";
+import { grayColor, matBlack } from "../../constants/Color.js";
 import { useDispatch, useSelector } from "react-redux";
 import { adminLogout } from "../../redux/thunks/admin";
 

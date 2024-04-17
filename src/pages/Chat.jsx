@@ -10,7 +10,7 @@ import MessageComponent from '../components/Shared/MessageComponent';
 import { InputBox } from '../components/Styles/StyledComponent';
 import FileMenu from '../components/dialogs/FileMenu';
 import { CustomeGray, orange } from '../constants/Color';
-import { ALERT, CHAT_LEAVED, NEW_MESSAGE, START_TYPING, STOP_TYPING } from "../constants/events";
+import { ALERT, CHAT_JOINED, CHAT_LEAVED, NEW_MESSAGE, START_TYPING, STOP_TYPING } from "../constants/events";
 import { useErrors, useSocketEvents } from '../hooks/hooks';
 import { useChatDetailsQuery, useGetMessagesQuery } from '../redux/api';
 import { removeNewMessagesAlert } from '../redux/reducers/chat';
@@ -86,7 +86,8 @@ const Chat = ({ chatId }) => {
   };
 
   useEffect(() => {
-    // socket.emit(CHAT_JOINED, { userId: user._id, members });
+    
+    socket.emit(CHAT_JOINED, { userId: user._id, members });
     dispatch(removeNewMessagesAlert(chatId));
 
     return () => {

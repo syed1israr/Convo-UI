@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid } from "@mui/x-data-grid";
-import { Paper, Typography, Container, Avatar } from '@mui/material'; // Group related imports together
+import { Paper, Typography, Container, Avatar, Skeleton } from '@mui/material'; // Group related imports together
 import AdminLayout from "../../components/Layout/AdminLayout";
 import Table from '../../components/Shared/Table';
 import { dashboardData } from "../../constants/SampleData";
 import { transoformImage } from "../../lib/Features"
+import { useFetchData } from '6pp';
+import { useErrors } from '../../hooks/hooks';
+import { server } from '../../constants/config';
 const Columns = [{
     field: "id",
     headerName: "ID",
@@ -45,15 +48,25 @@ const Columns = [{
 ];
 
 const UserManagement = () => {
-  const [rows, setRows] = useState([]);
+
+  const{ loading , data ,error}=useFetchData(`${server}/admin/users`,"dashboard-users")
   
+
+  useErrors([{
+    isError:error,
+    error:error
+  }])
+  const [rows, setRows] = useState([]);
+ 
   useEffect(() => {
-    setRows(dashboardData.users.map((i) => ({ ...i, id: i._id ,avatar:transoformImage(i.avatar,50)})));
-  }, []);
+    if(data){ setRows(data.transformedUsers.map((i) => ({ ...i, id: i._id ,avatar:transoformImage(i.avatar,50)})));}
+  }, [data]);
 
   return (
     <AdminLayout>
-      <Table heading={"All users"} columns={Columns} rows={rows} />
+      {
+        loading? <Skeleton height={"100vh"} /> : <Table heading={"All users"} columns={Columns} rows={rows} />
+      }
     </AdminLayout>
   );
 }

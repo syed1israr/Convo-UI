@@ -1,12 +1,12 @@
 import { CalendarMonth as CalendarIcon, Face as FaceIcon, AlternateEmail as UsernameIcon } from "@mui/icons-material";
-import { Avatar, Stack, Typography } from '@mui/material';
+import { Avatar, Skeleton, Stack, Typography } from '@mui/material';
 import moment from "moment";
 import React from 'react';
-import { useSelector } from "react-redux";
+    
 // import { transoformImage } from '../../lib/Features'
 const Profile = ({user}) => {
-    
-    return (
+
+    return  (
         <Stack spacing={"2rem"} direction={"column"} alignItems={"center"}>
             <Avatar src={ user?.data?.avatar?.url}
             

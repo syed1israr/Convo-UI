@@ -1,5 +1,5 @@
 import { Drawer, Grid, Skeleton } from "@mui/material";
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ import { useMyChatsQuery } from '../../redux/api.js';
 import { setIsDeleteMenu, setIsMobile, setSelectedDeleteChat } from '../../redux/reducers/misc.js';
 import { getSocket } from '../../socket.jsx';
 
-import { NEW_MESSAGE_ALERT, NEW_REQUEST_ALERT, REFETCH_CHATS } from "../../constants/events.js";
+import { NEW_MESSAGE_ALERT, NEW_REQUEST_ALERT, ONLINE_USERS, REFETCH_CHATS } from "../../constants/events.js";
 import { getOrSaveFromStorage } from "../../lib/Features.js";
 import { incrementNotification, setNewMessagesAlert } from "../../redux/reducers/chat.js";
 import Title from '../Shared/Title';
@@ -31,6 +31,8 @@ const AppLayout = (WrappedComponent) => {
         // Fetching chats
         const { isLoading, data, isError, error, refetch } = useMyChatsQuery("");
         const deleteMenuAnchor = useRef(null);
+
+          const [onlineUsers, setOnlineUsers] = useState([]);
         // Error handling
         useErrors([{ isError, error }]);
         useEffect(() => {
@@ -66,6 +68,12 @@ const AppLayout = (WrappedComponent) => {
         },[dispatch])
 
 
+        const onlineUsersListener = useCallback((data) => {
+            
+            setOnlineUsers(data);
+          }, []);
+        
+
         const refetchListener = useCallback(() => {
             refetch();
             navigate("/");
@@ -76,6 +84,7 @@ const AppLayout = (WrappedComponent) => {
             [NEW_MESSAGE_ALERT]: newMessageAlertListener,
             [NEW_REQUEST_ALERT]: newRequestAlertListener,
             [REFETCH_CHATS]: refetchListener,
+            [ONLINE_USERS]: onlineUsersListener,
           };
         
           useSocketEvents(socket, eventHandlers);
@@ -101,6 +110,7 @@ const AppLayout = (WrappedComponent) => {
                             chatId={chatId}
                             handleDeleteChat={handleDeleteChat}
                             newMessagesAlert={newMessagesAlert}
+                            onlineUsers={onlineUsers}
                         />
                     </Drawer>
                 )}

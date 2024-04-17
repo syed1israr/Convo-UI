@@ -3,11 +3,12 @@ import { Avatar, Skeleton, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
 import AvatarCard from "../../components/Shared/AvatarCard.jsx";
-import Table from "../../components/shared/Table";
+
+import AdminLayout from "../../components/Layout/AdminLayout.jsx";
+import Table from "../../components/Shared/Table.jsx";
 import { server } from "../../constants/config.js";
 import { useErrors } from "../../hooks/hooks.jsx";
-import { transoformImage as  transformImage } from "../../lib/Features.js";
-import AdminLayout from "../../components/Layout/AdminLayout.jsx";
+import { transoformImage as transformImage } from "../../lib/Features.js";
 
 const columns = [
   {
@@ -35,7 +36,7 @@ const columns = [
     field: "groupChat",
     headerName: "Group",
     headerClassName: "table-header",
-    width: 100,
+    width: 50,
   },
   {
     field: "totalMembers",
@@ -73,24 +74,20 @@ const columns = [
 ];
 
 const ChatManagement = () => {
-  const { loading, data, error } = useFetchData(
-    `${server}/admin/chats`,
-    "dashboard-chats"
-  );
+  const{ loading , data ,error}=useFetchData(`${server}/admin/chats`,"dashboard-users")
+  
 
-  useErrors([
-    {
-      isError: error,
-      error: error,
-    },
-  ]);
-
+  useErrors([{
+    isError:error,
+    error:error
+  }])
+  
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
     if (data) {
       setRows(
-        data.chats.map((i) => ({
+        data?.transformedChat.map((i) => ({
           ...i,
           id: i._id,
           avatar: i.avatar.map((i) => transformImage(i, 50)),

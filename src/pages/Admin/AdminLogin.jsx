@@ -9,12 +9,12 @@ import {
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
-import { bgGradient } from "../../constants/color";
+
 import { adminLogin, getAdmin } from "../../redux/thunks/admin";
 
 const AdminLogin = () => {
   const { isAdmin } = useSelector((state) => state.auth);
-
+  console.log("iSAdmin",isAdmin)
   const dispatch = useDispatch();
 
   const secretKey = useInputValidation("");
@@ -33,7 +33,7 @@ const AdminLogin = () => {
   return (
     <div
       style={{
-        backgroundImage: bgGradient,
+        backgroundImage: "2694ab",
       }}
     >
       <Container

@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import AdminLayout from '../../components/Layout/AdminLayout';
-import Table from '../../components/Shared/Table';
-import { dashboardData } from '../../constants/SampleData';
-import { fileFormat, transoformImage } from "../../lib/Features";
+import { useFetchData } from "6pp";
+import { Avatar, Box, Skeleton, Stack } from '@mui/material';
 import moment from 'moment';
-import { Avatar, Box, Stack } from '@mui/material';
-import RenderContent from  "../../components/Shared/RenderContent"
-
+import React, { useEffect, useState } from 'react';
+import AdminLayout from '../../components/Layout/AdminLayout';
+import RenderContent from "../../components/Shared/RenderContent";
+import Table from '../../components/Shared/Table';
+import { server } from '../../constants/config';
+import { useErrors } from '../../hooks/hooks';
+import { fileFormat, transoformImage } from "../../lib/Features";
 // Import Avatar component if not already imported
 
 const Columns = [{
@@ -78,25 +79,34 @@ const Columns = [{
 ];
 
 const MessageManagement = () => {
+    const{ loading , data ,error}=useFetchData(`${server}/admin/messages`,"dashboard-messages")
+    useErrors([{
+      isError:error,
+      error:error
+    }])
     const [rows, setRows] = useState([]);
-
+        console.log(data)
     useEffect(() => {
-      setRows(dashboardData.messages.map((message, index) => ({
-          ...message,
-          id: message._id, // Ensure each row has a unique id property
-          sender: {
-              name: message.sender.name,
-              avatar: transoformImage(message.sender.avatar, 50)
-          },
-          createdAt: moment(message.createdAt).format("YYYY-MM-DD HH:mm:ss") // Adjust format as needed
-      })));
-  }, []);
+        if(data){
+            setRows(data?.transformedMessages.map((message, index) => ({
+                ...message,
+                id: message._id, // Ensure each row has a unique id property
+                sender: {
+                    name: message.sender.name,
+                    avatar: transoformImage(message.sender.avatar, 50)
+                },
+                createdAt: moment(message.createdAt).format("YYYY-MM-DD HH:mm:ss") // Adjust format as needed
+            })));
+        }
+  }, [data]);
 
     return (
         <AdminLayout>
-            <Table heading={"All Messages"} 
+           {
+            loading? <Skeleton height={"100vh"} /> :  <Table heading={"All Messages"} 
             rowheight={200}
             columns={Columns} rows={rows}/>
+           }
         </AdminLayout>
     );
 }
