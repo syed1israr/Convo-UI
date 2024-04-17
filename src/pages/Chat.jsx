@@ -19,19 +19,20 @@ import { getSocket } from '../socket';
 
 
 const Chat = ({ chatId }) => {
-    
+  const { user } = useSelector(state => state.auth);
   const socket = getSocket();
   const containerref = useRef(null);
   const bottomRef = useRef(null);
   const dispatch=useDispatch()
   const navigate= useNavigate()
+  
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [page, setpage] = useState(1);
   const [fileMenuAnchor, setfileMenuAnchor] = useState(null);
-  const { user } = useSelector(state => state.auth);
-  const chatDetails = useChatDetailsQuery({ chatId, skip: !chatId });
+ 
 
+  const chatDetails = useChatDetailsQuery({ chatId, skip: !chatId });
   const  oldMEssagesChunk = useGetMessagesQuery({chatId,page})
   
   const [IamTyping, setIamTyping] = useState(false);
@@ -77,17 +78,14 @@ const Chat = ({ chatId }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
     if (!message.trim()) return;
-
-    // Emitting the message to the server
     socket.emit(NEW_MESSAGE, { chatId, members, message });
     setMessage("");
   };
-
-  useEffect(() => {
     
-    socket.emit(CHAT_JOINED, { userId: user._id, members });
+    useEffect(() => {
+    socket.emit(CHAT_JOINED, { userId: user?.data?._id, members });
+   
     dispatch(removeNewMessagesAlert(chatId));
 
     return () => {
@@ -95,9 +93,9 @@ const Chat = ({ chatId }) => {
       setMessage("");
       setOldMessages([]);
       setpage(1);
-      socket.emit(CHAT_LEAVED, { userId: user._id, members });
+      socket.emit(CHAT_LEAVED, { userId: user?.data?._id, members });
     };
-  }, [chatId]);
+    }, [chatId]);
 
   
   useEffect(() => {
@@ -153,17 +151,18 @@ const Chat = ({ chatId }) => {
     [chatId]
   );
 
+ 
+
+  
   const eventHandler = {
     [ALERT]: alertListener,
     [NEW_MESSAGE]: newMessagesListener,
     [START_TYPING]: startTypingListener,
     [STOP_TYPING]: stopTypingListener,
   };
-
+  
   useSocketEvents(socket, eventHandler);
-
   useErrors(errors);
-
   const allMessages = [...oldMessages, ...messages];
 
   return chatDetails.isLoading ? <Skeleton /> : (

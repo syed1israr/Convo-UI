@@ -8,7 +8,7 @@ const Profile = ({user}) => {
 
     return  (
         <Stack spacing={"2rem"} direction={"column"} alignItems={"center"}>
-            <Avatar src={ user?.data?.avatar?.url}
+            <Avatar src={user?.data?.avatar?.url}
             
             sx={{
                 width: 200,

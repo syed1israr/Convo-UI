@@ -14,7 +14,7 @@ import { adminLogin, getAdmin } from "../../redux/thunks/admin";
 
 const AdminLogin = () => {
   const { isAdmin } = useSelector((state) => state.auth);
-  console.log("iSAdmin",isAdmin)
+  
   const dispatch = useDispatch();
 
   const secretKey = useInputValidation("");

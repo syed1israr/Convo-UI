@@ -19,27 +19,30 @@ import Header from './Header';
 
 const AppLayout = (WrappedComponent) => {
     const AppLayoutComponent = (props) => {
+
+        const socket = getSocket();
         const dispatch = useDispatch();
         const navigate = useNavigate();
+        const [onlineUsers, setOnlineUsers] = useState([]);
+       
+        const params = useParams();
+        const chatId = params.chatId;
+        const deleteMenuAnchor = useRef(null);
+
+
         const { isMobile } = useSelector(state => state.misc);
         const { user } = useSelector(state => state.auth);
         const { newMessagesAlert } = useSelector((state) => state.chat);
        
-        const params = useParams();
-        const chatId = params.chatId;
        
-        // Fetching chats
         const { isLoading, data, isError, error, refetch } = useMyChatsQuery("");
-        const deleteMenuAnchor = useRef(null);
-
-          const [onlineUsers, setOnlineUsers] = useState([]);
-        // Error handling
-        useErrors([{ isError, error }]);
+              
+        
         useEffect(() => {
             getOrSaveFromStorage({ key: NEW_MESSAGE_ALERT, value: newMessagesAlert });
           }, [newMessagesAlert]);
-        // Socket initialization
-        const socket = getSocket();
+        
+       
         
 
         // Handler for deleting a chat
@@ -53,6 +56,8 @@ const AppLayout = (WrappedComponent) => {
         const handleMobileClose = () => {
             dispatch(setIsMobile(false));
         };
+
+
         const newMessageAlertListener=useCallback((data)=>{
             
             if(data.chatId===chatId){
@@ -69,9 +74,8 @@ const AppLayout = (WrappedComponent) => {
 
 
         const onlineUsersListener = useCallback((data) => {
-            
             setOnlineUsers(data);
-          }, []);
+          }, [data]);
         
 
         const refetchListener = useCallback(() => {
@@ -88,16 +92,16 @@ const AppLayout = (WrappedComponent) => {
           };
         
           useSocketEvents(socket, eventHandlers);
-          
-          
-         
+          useErrors([{ isError, error }]);
         return (
             <>
                 <Title />
                 <Header />
+
                 <DeleteChatMenu
                 dispatch={dispatch}
                 deleteMenuAnchor={deleteMenuAnchor}
+
              />
 
                 {isLoading ? (
@@ -108,9 +112,10 @@ const AppLayout = (WrappedComponent) => {
                             w="70vw"
                             chats={data?.chats}
                             chatId={chatId}
-                            handleDeleteChat={handleDeleteChat}
-                            newMessagesAlert={newMessagesAlert}
                             onlineUsers={onlineUsers}
+                            newMessagesAlert={newMessagesAlert}
+                            handleDeleteChat={handleDeleteChat}
+                            
                         />
                     </Drawer>
                 )}
@@ -123,6 +128,7 @@ const AppLayout = (WrappedComponent) => {
                             <ChatList
                                 chats={data?.chats}
                                 chatId={chatId}
+                                onlineUsers={onlineUsers}
                                 handleDeleteChat={handleDeleteChat}
                                 newMessagesAlert={newMessagesAlert}
                             />
@@ -138,7 +144,7 @@ const AppLayout = (WrappedComponent) => {
                         sx={{ display: { xs: "none", md: "block" }, padding: "2rem", bgcolor: "rgba(0,0,0,0.85)" }}
                         height={"100%"}
                     >
-                        <Profile user={user} />
+                    <Profile user={user} />
                     </Grid>
                 </Grid>
             </>

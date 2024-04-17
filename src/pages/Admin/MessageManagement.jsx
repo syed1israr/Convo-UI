@@ -85,7 +85,7 @@ const MessageManagement = () => {
       error:error
     }])
     const [rows, setRows] = useState([]);
-        console.log(data)
+    
     useEffect(() => {
         if(data){
             setRows(data?.transformedMessages.map((message, index) => ({

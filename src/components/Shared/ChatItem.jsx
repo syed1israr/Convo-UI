@@ -15,7 +15,7 @@ const ChatItem = ({
   index = 0,
   handleDeleteChat,
 }) => {
-
+ 
   return (
     <StyledLink
       sx={{
@@ -46,7 +46,7 @@ const ChatItem = ({
             <Typography>{newMessageAlert.count} New Message</Typography>
           )}
         </Stack>
-
+        
         {isOnline && (
           <Box
             sx={{

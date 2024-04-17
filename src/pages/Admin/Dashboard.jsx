@@ -43,7 +43,7 @@ const Dashboard = () => {
       </Stack>
     </Paper>
   );
-  console.log("data",data)
+  
   return loading ? <LayoutLoader/> :  (
     <AdminLayout>
       <Container component={"main"}>
