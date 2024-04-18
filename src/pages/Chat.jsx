@@ -177,7 +177,7 @@ const Chat = ({ chatId }) => {
         sx={{
           overflowX: "hidden",
           overflowY: "auto",
-          backgroundImage: `url("https://img.freepik.com/free-vector/frame-t-with-green-bamboo_1308-38160.jpg?t=st=1713374653~exp=1713378253~hmac=d57d1185b70d699cf620adde60605cdb745b934165f6f1e4a3988c7267f7f42c&w=1380")`,
+          
           backgroundSize: "cover", // Use cover to make the image fit perfectly within the Stack
           "&::-webkit-scrollbar": {
             display: "none", // Hide the scrollbar in WebKit (Chrome, Safari, etc.)
