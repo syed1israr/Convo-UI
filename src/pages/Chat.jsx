@@ -172,12 +172,11 @@ const Chat = ({ chatId }) => {
         boxSizing={"border-box"}
         padding={"1rem"}
         spacing={"1rem"}
-        // bgcolor={CustomeGray}
+        bgcolor={CustomeGray}
         height={"90%"}
         sx={{
           overflowX: "hidden",
           overflowY: "auto",
-          
           backgroundSize: "cover", // Use cover to make the image fit perfectly within the Stack
           "&::-webkit-scrollbar": {
             display: "none", // Hide the scrollbar in WebKit (Chrome, Safari, etc.)

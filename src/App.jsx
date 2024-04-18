@@ -8,6 +8,7 @@ import ProtectRoute from './components/Auth/ProtectRoute';
 import { LayoutLoader } from './components/Layout/Loaders';
 import { SocketProvider} from "./socket.jsx"
 import { server } from "./constants/config.js";
+
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
 const Chat = lazy(() => import("./pages/Chat"));
