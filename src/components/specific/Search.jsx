@@ -7,6 +7,7 @@ import {
   List,
   Stack,
   TextField,
+  Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -72,16 +73,27 @@ const Search = () => {
           }}
         />
 
+       {
+        search.value=="" ? 
+        <Typography
+        sx={{
+          marginLeft:"5rem",
+          marginTop:"2rem",
+          
+        }}
+         >  Start Typing to See List </Typography>
+         : 
         <List>
-          {users.map((i) => (
-            <UserItem
-              user={i}
-              key={i._id}
-              handler={addFriendHandler}
-              handlerIsLoading={isLoadingSendFriendRequest}
-            />
-          ))}
-        </List>
+        {users.map((i) => (
+          <UserItem
+            user={i}
+            key={i._id}
+            handler={addFriendHandler}
+            handlerIsLoading={isLoadingSendFriendRequest}
+          />
+        ))}
+      </List>
+       }
       </Stack>
     </Dialog>
   );

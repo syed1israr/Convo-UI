@@ -144,7 +144,7 @@ const AppLayout = (WrappedComponent) => {
                         sx={{ display: { xs: "none", md: "block" }, padding: "2rem", bgcolor: "rgba(0,0,0,0.85)" }}
                         height={"100%"}
                     >
-                    <Profile user={user} />
+                    <Profile />
                     </Grid>
                 </Grid>
             </>
