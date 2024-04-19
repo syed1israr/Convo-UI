@@ -87,7 +87,7 @@ const ChatManagement = () => {
   useEffect(() => {
     if (data) {
       setRows(
-        data?.transformedChat.map((i) => ({
+        data?.transformedChat?.map((i) => ({
           ...i,
           id: i._id,
           avatar: i.avatar.map((i) => transformImage(i, 50)),
