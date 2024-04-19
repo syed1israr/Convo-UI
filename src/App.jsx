@@ -9,6 +9,7 @@ import { LayoutLoader } from './components/Layout/Loaders';
 import { SocketProvider} from "./socket.jsx"
 import { server } from "./constants/config.js";
 
+
 const Home = lazy(() => import("./pages/Home"));
 const Login = lazy(() => import("./pages/Login"));
 const Chat = lazy(() => import("./pages/Chat"));
@@ -19,6 +20,9 @@ const UserManagement =lazy(()=> import("./pages/Admin/UserManagement"))
 const ChatManagement=lazy(()=> import("./pages/Admin/ChatManagement"))
 const MessageManagement=lazy(()=> import("./pages/Admin/MessageManagement"))
 const Dashboard=lazy(()=> import("./pages/Admin/Dashboard"))
+
+
+
 
 
 const App = () => {
@@ -32,6 +36,7 @@ const dispatch= useDispatch()
 }, [dispatch]);
 
   return loader ? <LayoutLoader/> : (
+  
     <BrowserRouter>
      <Suspense fallback={<div><LayoutLoader/></div>}>
      <Routes>
@@ -56,6 +61,7 @@ const dispatch= useDispatch()
      </Suspense>
      <Toaster position="bottom-center"/>
     </BrowserRouter>
+   
   );
 }
 

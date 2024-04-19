@@ -16,11 +16,14 @@ export const VisuallyHiddenInput = styled("input")({
 
 export const StyledLink = styled(LinkComponent)`
     text-decoration: none;
-    border-radius: 2rem;
-    padding: 1rem 2rem;
+    padding: 1rem;
+    border-radius:0.3rem;
+    padding-left: 5rem;
+    
     color: black;
     &:hover {
         background-color: rgba(0,0,0,0.1);
+        
     }
 `;
 
@@ -69,3 +72,4 @@ export const CurveButton = styled("button")`
 export const BouncingSkeleton = styled(Skeleton)(() => ({
     animation: `${bounceAnimation} 1s infinite`,
   }));
+

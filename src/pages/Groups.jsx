@@ -13,6 +13,8 @@ import { LayoutLoader } from "../components/Layout/Loaders.jsx";
 import { useAsyncMutation, useErrors } from "../hooks/hooks.jsx";
 import { useAddGroupMembersMutation, useChatDetailsQuery, useDeleteChatMutation, useMyGroupsQuery, useRemoveGroupMemberMutation, useRenameGroupMutation } from "../redux/api.js";
 import { setIsAddMember } from "../redux/reducers/misc.js";
+import { matBlack } from '../constants/Color.js';
+import { orange } from '@mui/material/colors';
 
 const ConfirmDeleteDialoge=lazy(()=>import("../components/dialogs/ConfirmDeleteDialoge"))
 const AddMemberDialoge=lazy(()=>import("../components/dialogs/AddMemberDialoge"))
@@ -148,14 +150,24 @@ const Groups = () => {
     <Stack direction={"row"} alignItems={"center"} justifyContent={"center"} spacing={"1rem"} padding={"3rem"}>
       {isEdit ? (
         <>
-          <TextField  value={groupnameUpdatedValue}  onChange={e => setgroupnameUpdatedValue(e.target.value)} />
+          <TextField  
+          value={groupnameUpdatedValue}  onChange={e => setgroupnameUpdatedValue(e.target.value)} />
           <IconButton
           disabled={isLoadingGroupName}
           onClick={updateGroupNamehandler}><Done /></IconButton>
         </>
       ) : (
         <>
-          <Typography variant='h4'>{groupname}</Typography>
+          <Typography  sx={{
+             padding:"1rem 2rem",
+             backgroundColor:`rgba(0,0,0,0.05)`,
+              ":hover":{
+                backgroundColor:`rgba(0,0,0,0.3)`,
+                borderRadius:"0.2rem",
+                
+              }
+            }}
+             variant='h5'>{groupname}</Typography>
           <IconButton disabled={isLoadingGroupName}  onClick={() => setisEdit(true)}><EditIcon /></IconButton>
         </>
       )}
@@ -227,7 +239,7 @@ const Groups = () => {
         {groupname && (
           <>
             {GroupName}
-            <Typography margin={"2rem"} alignSelf={"flex-start"} variant='body1'>Members</Typography>
+            <Typography margin={"2rem"}  variant='h6'>Members</Typography>
             <Stack
               maxWidth={"45rem"}
               width={"100%"}
@@ -237,8 +249,7 @@ const Groups = () => {
                 xs: "0",
                 md: "1rem 4rem",
               }}
-              spacing={"2rem"}
-             
+              spacing={"2rem"}    
               height={"50vh"}
               overflow={"auto"}
             >
@@ -246,10 +257,9 @@ const Groups = () => {
                 members.map((user)=>(
                   <UserItem user={user} key={user._id} isAdded
                   styling={{
-                    boxShadow:"0 0 0.8rem rgba(0,0,0,0.2) ",
-                    padding:"1rem 2rem",
-                    borderRadius:"1rem"
-
+                    boxShadow:"0 0 0.8rem rgba(0,0,0,0.1) ",
+                    padding:"0.4rem 2rem",
+                    borderRadius:"0.4rem"
                   }}
                   handler={removeMemberHandler}
                    />
@@ -282,7 +292,7 @@ const Groups = () => {
   );
 };
 
-const GroupList = ({ w = "100%", myGroups = [], chatId }) => (
+const GroupList = ({ w = "80%", myGroups = [], chatId }) => (
   <Stack width={w} overflowY={"auto"}>
     {myGroups.length > 0 ? myGroups.map((group) => <GroupListItem group={group} chatId={chatId} key={group._id} />) : <Typography textAlign="center" padding="1rem">No Groups</Typography>}
   </Stack>
