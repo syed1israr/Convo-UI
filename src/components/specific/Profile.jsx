@@ -3,9 +3,7 @@ import { useSelector } from "react-redux";
 import moment from "moment";
 import { Avatar, Skeleton, Stack, Typography } from '@mui/material';
 import { CalendarMonth as CalendarIcon, Face as FaceIcon, AlternateEmail as UsernameIcon } from "@mui/icons-material";
-{/*
-  Hi
-*/}
+
 const Profile = () => {
     const [userData, setUserData] = useState(null);
     const { user } = useSelector(state => state.auth); // Assuming `auth` is the slice containing user data

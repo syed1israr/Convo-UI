@@ -1,9 +1,7 @@
 import { Container, Paper, Typography } from '@mui/material';
 import { DataGrid } from "@mui/x-data-grid";
 import React from 'react';
-{/*
-  Hi
-*/}
+
 const Table = ({ rows, columns, heading, rowheight = 52 }) => { // Fix typo in props
     return (
       <Container

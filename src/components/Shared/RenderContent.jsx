@@ -18,7 +18,5 @@ const RenderContent = (file,url) => {
             return  <FileOpen/>
     }
 }
-{/*
-  Hi
-*/}
+
 export default RenderContent

@@ -1,9 +1,7 @@
 import { Add as AddIcCallRoundedIcon, RemoveCircle as RemoveCircleOutlineIcon } from '@mui/icons-material';
 import { Avatar, IconButton, ListItem, Stack, Typography } from '@mui/material';
 import React, { memo } from 'react';
-{/*
-  Hi
-*/}
+
 const UserItem = ({ user, handler, handlerisLoading,isAdded=false ,styling={} }) => {
   const { name, _id, avatar  } = user;
 

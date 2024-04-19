@@ -9,9 +9,7 @@ import Table from "../../components/Shared/Table.jsx";
 import { server } from "../../constants/config.js";
 import { useErrors } from "../../hooks/hooks.jsx";
 import { transoformImage as transformImage } from "../../lib/Features.js";
-{/*
-  Hi
-*/}
+
 const columns = [
   {
     field: "id",

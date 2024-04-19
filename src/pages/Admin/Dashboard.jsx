@@ -9,9 +9,7 @@ import { CurveButton, SearchField } from '../../components/Styles/StyledComponen
 import { DoughnutChart, LineChart } from '../../components/specific/Charts';
 import { server } from '../../constants/config';
 import { useErrors } from '../../hooks/hooks';
-{/*
-  Hi
-*/}
+
 const Dashboard = () => {
   const{ loading , data ,error}=useFetchData(`${server}/admin/stats`,"dashboard-stats")
   const { stats }=data || {}

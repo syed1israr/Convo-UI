@@ -1,9 +1,7 @@
 import { Stack } from "@mui/material";
 import React from "react";
 import ChatItem from "../Shared/ChatItem.jsx";
-{/*
-  Hi
-*/}
+
 const ChatList = ({
   w = "100%",
   chats = [],

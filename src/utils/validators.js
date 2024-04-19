@@ -6,6 +6,3 @@ export const usernameValidator=(Username)=>{
         return  { isValid: false, errorMessage: "username Is not Valid", }
     }  
 }
-{/*
-  Hi
-*/}

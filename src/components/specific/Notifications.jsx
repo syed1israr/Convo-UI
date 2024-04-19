@@ -30,9 +30,7 @@ const Notifications = () => {
   const friendRequestHandler = async ({ _id, accept }) => {
     dispatch(setIsNotification(false));
     await acceptRequest("Accepting...", { requestId: _id, accept });
-  };{/*
-  Hi
-*/}
+  };
 
   const closeHandler = () => dispatch(setIsNotification(false));
 

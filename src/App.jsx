@@ -20,9 +20,7 @@ const UserManagement =lazy(()=> import("./pages/Admin/UserManagement"))
 const ChatManagement=lazy(()=> import("./pages/Admin/ChatManagement"))
 const MessageManagement=lazy(()=> import("./pages/Admin/MessageManagement"))
 const Dashboard=lazy(()=> import("./pages/Admin/Dashboard"))
-{/*
-  Hi
-*/}
+
 
 
 

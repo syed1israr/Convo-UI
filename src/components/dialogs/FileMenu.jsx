@@ -10,9 +10,7 @@ import {
 } from "@mui/icons-material";
 import toast from "react-hot-toast";
 import { useSendAttachmentsMutation } from "../../redux/api";
-{/*
-  Hi
-*/}
+
 const FileMenu = ({ anchorE1, chatId }) => {
   const { isFileMenu } = useSelector((state) => state.misc);
  

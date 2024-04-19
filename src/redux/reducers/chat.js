@@ -14,9 +14,7 @@ const initialState = {
     },
   ],
 };
-{/*
-  Hi
-*/}
+
 const chatSlice = createSlice({
   name: "chat",
   initialState,

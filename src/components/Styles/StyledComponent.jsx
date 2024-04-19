@@ -13,9 +13,7 @@ export const VisuallyHiddenInput = styled("input")({
     whiteSpace: "nowrap",
     width: 1
 });
-{/*
-  Hi
-*/}
+
 export const StyledLink = styled(LinkComponent)`
     text-decoration: none;
     padding: 1rem;

@@ -5,9 +5,7 @@ import React, { memo } from 'react'
 import { LightBlue } from '../../constants/Color'
 import { fileFormat } from '../../lib/Features'
 import RenderContent from './RenderContent'
-{/*
-  Hi
-*/}
+
 const MessageComponent = ({message, user}) => {
     const {sender, content ,attachments,createdAt}=message
     const sameSender=sender?._id===user.data._id

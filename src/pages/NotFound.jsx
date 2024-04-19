@@ -22,6 +22,3 @@ const NotFound = () => {
 };
 
 export default NotFound;
-{/*
-  Hi
-*/}

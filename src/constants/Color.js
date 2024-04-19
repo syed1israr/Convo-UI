@@ -5,6 +5,3 @@ export const LightBlue="2694ab";
 export const grayColor="2694ab";
 export const bgGradient="2694ab";
 export const matBlack="rgba(0,0,0,0.8)"
-{/*
-  Hi
-*/}

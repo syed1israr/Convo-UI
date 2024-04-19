@@ -1,8 +1,6 @@
 import { Grid, Skeleton, Stack } from '@mui/material';
 import { BouncingSkeleton } from "../Styles/StyledComponent";
-{/*
-  Hi
-*/}
+
 export const LayoutLoader=()=>{
     return(
     <Grid container style={{ height: "calc(100vh - 4rem)" }} spacing={"1rem"}>
