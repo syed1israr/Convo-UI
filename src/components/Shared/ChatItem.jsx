@@ -3,7 +3,9 @@ import { motion } from "framer-motion";
 import React, { memo } from "react";
 import { StyledLink } from "../Styles/StyledComponent";
 import AvatarCard from "./AvatarCard";
-
+{/*
+  Hi
+*/}
 const ChatItem = ({
   avatar = [],
   name,

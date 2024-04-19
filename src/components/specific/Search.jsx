@@ -27,7 +27,9 @@ const Search = () => {
   const [sendFriendRequest, isLoadingSendFriendRequest] = useAsyncMutation(
     useSendFriendRequestMutation
   );
-
+{/*
+  Hi
+*/}
   const dispatch = useDispatch();
 
   const search = useInputValidation("");

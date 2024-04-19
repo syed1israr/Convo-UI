@@ -7,6 +7,9 @@ const fileFormat = (url = "") => {
     if (fileExtension === "png" || fileExtension === "jpeg" || fileExtension === "gif" || fileExtension === "jpg") return "image";
     return "file"; // Corrected returning "file" instead of file
 }
+{/*
+  Hi
+*/}
 const transoformImage= (url = "",width=100)=>
 {
     const newUrl = url.replace("upload/", `upload/dpr_auto/w_${width}/`);

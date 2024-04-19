@@ -16,7 +16,9 @@ import { useChatDetailsQuery, useGetMessagesQuery } from '../redux/api';
 import { removeNewMessagesAlert } from '../redux/reducers/chat';
 import { setIsFileMenu } from '../redux/reducers/misc';
 import { getSocket } from '../socket';
-
+{/*
+  Hi
+*/}
 
 const Chat = ({ chatId }) => {
   const { user } = useSelector(state => state.auth);

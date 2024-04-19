@@ -13,6 +13,9 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+{/*
+  Hi
+*/}
 
 const labels = getLast7Days();
 

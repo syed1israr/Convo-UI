@@ -7,7 +7,9 @@ import { setIsAddMember } from "../../redux/reducers/misc.js"
 import { useAvailableFriendsQuery } from '../../redux/api';
 import { useAsyncMutation, useErrors } from '../../hooks/hooks';
 
-
+{/*
+  Hi
+*/}
 const AddMemberDialog = ({ addMember, isLoadingAddMember, chatId }) => {
   const dispatch = useDispatch();
 

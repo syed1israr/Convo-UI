@@ -10,7 +10,9 @@ import { server } from "../../constants/config.js";
 import { userNotExists } from "../../redux/reducers/auth.js";
 import { resetNotificationCount } from '../../redux/reducers/chat.js';
 import { setIsMobile, setIsNewGroup, setIsNotification, setIsSearch } from '../../redux/reducers/misc.js';
-
+{/*
+  Hi
+*/}
 // Lazy-loaded components
 const SearchDialog = lazy(() => import('../specific/Search'));
 const NotificationDialog = lazy(() => import('../specific/Notifications'));

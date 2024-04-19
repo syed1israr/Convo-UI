@@ -29,5 +29,8 @@ const AvatarCard = ({avatar=[],max=4}) => {
     </AvatarGroup>
  </Stack>
 }
+{/*
+  Hi
+*/}
 
 export default AvatarCard
