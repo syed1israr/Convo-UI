@@ -59,7 +59,7 @@ const ProfileCard = ({ text, Icon, heading }) => (
 
 const SkeletonProfile = () => (
     <Stack className="MuiStack-root css-1u4that-MuiStack-root" style={{
-        
+        marginLeft:"15%",
     }}>
         <Skeleton variant="circular" width={200} height={201} />
         {[...Array(4)].map((_, index) => (
@@ -72,7 +72,7 @@ const SkeletonCard = () => (
     <Stack className="MuiStack-root css-45wm5i-MuiStack-root"
         style={{
             marginTop:"10%",
-            
+            marginLeft:"25%",
         }}
     >
         <Skeleton variant="circular" width={50} height={50} />
