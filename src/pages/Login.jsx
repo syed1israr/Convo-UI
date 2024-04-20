@@ -1,7 +1,3 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import axios from "axios";
-import toast from "react-hot-toast";
 import { useFileHandler, useInputValidation } from "6pp";
 import { CameraAlt as CameraAltIcon } from "@mui/icons-material";
 import {
@@ -14,12 +10,15 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import axios from "axios";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 import { VisuallyHiddenInput } from "../components/Styles/StyledComponent";
+import { server } from "../constants/config";
 import { userExists } from "../redux/reducers/auth.js";
 import { usernameValidator } from "../utils/validators";
-import { LightBlue } from "../constants/Color";
-import { server } from "../constants/config";
-
+import myImage from  "../../public/myImage.jpg"
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -75,7 +74,7 @@ const Login = () => {
       style={{
         width: "100vw",
         height: "100vh",
-        backgroundImage:`url("https://wallpaperaccess.com/full/2292800.png")`,
+        backgroundImage:`url(${myImage})`,
         objectFit: "contain",
       }}
     >
@@ -96,11 +95,10 @@ const Login = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            backdropFilter: "blur(1px) saturate(143%)",
-            WebkitBackdropFilter: "blur(1px) saturate(143%)",
-            backgroundColor: "rgba(102, 102, 102,0.71)",
-            borderRadius: "12px",
-            border: "1px solid rgba(255, 255, 255, 0.125)"
+            background:"transparent",
+            border: "2px solid rgba(255,255,255,0.2)",
+            backdropFilter:"blur(20px)",
+            boxShadow:"0 0 10px rgba(0,0,0,0.2)"
           }}
              
         >
@@ -133,7 +131,7 @@ const Login = () => {
 const LoginForm = ({ handleLogin, toggleLogin, username, password, isLoading }) => (
   <div style={{ height: "50vh", padding: "1.2rem 2rem", color: "white" }}>
     <Typography   marginLeft={"1rem"} variant="h5"
-    color={"black"}>
+    color={"white"}>
       Login
     </Typography>
     <form style={{ width: "100%", marginTop: "1rem" }} onSubmit={handleLogin}>
@@ -157,16 +155,25 @@ const LoginForm = ({ handleLogin, toggleLogin, username, password, isLoading }) 
         onChange={password.changeHandler}
       />
       <Button
-        sx={{ marginTop: "1rem" }}
-        variant="contained"
-        color="primary"
+        sx={{ 
+          background:"rgba(0,0,0,0.7)",
+          color:"white",
+          marginTop: "1rem",
+          borderRadius:"20px",
+          ":hover":{
+            color:"black",
+            background:"rgba(0,0,0,0.09)",
+          }
+        }}
+        variant="solid"
+        color="blue"
         type="submit"
         fullWidth
         disabled={isLoading}
       >
         Login
       </Button>
-      <Typography textAlign={"center"} m={"1rem"}  color={"black"}> 
+      <Typography textAlign={"center"} m={"1rem"}  color={"white"}> 
         OR
       </Typography>
       <Button disabled={isLoading} fullWidth variant="text" onClick={toggleLogin}>
@@ -181,7 +188,7 @@ const SignupForm = ({ handleSignUp, toggleLogin, name, bio, username, password, 
   style={{padding: "1.2rem 2rem", color: "white" }}
   
   >
-    <Typography variant="h5" color={"black"} >Sign Up</Typography>
+    <Typography variant="h5" color={"white"} >Sign Up</Typography>
     <form style={{ width: "100%", marginTop: "1rem" }} onSubmit={handleSignUp}>
       <Stack position={"relative"} width={"10rem"} margin={"auto"}>
         <Avatar sx={{ width: "10rem", height: "10rem", objectFit: "contain" }} src={avatar.preview} />
@@ -251,17 +258,26 @@ const SignupForm = ({ handleSignUp, toggleLogin, name, bio, username, password, 
         value={password.value}
         onChange={password.changeHandler}
       />
-      <Button
-        sx={{ marginTop: "1rem" }}
-        variant="contained"
-        color="primary"
+      <Button  
+        sx={{ 
+          background:"rgba(0,0,0,0.7)",
+          color:"white",
+          marginTop: "1rem",
+          borderRadius:"20px",
+          ":hover":{
+            color:"black",
+            background:"rgba(0,0,0,0.09)",
+          }
+        }}
+        variant="solid"
+        color="blue"
         type="submit"
         fullWidth
         disabled={isLoading}
       >
         Sign Up
       </Button>
-      <Typography textAlign={"center"} m={"1rem"} color={"black"} >
+      <Typography textAlign={"center"} m={"1rem"} color={"white"} >
         OR
       </Typography>
       <Button disabled={isLoading} fullWidth variant="text" onClick={toggleLogin}>
