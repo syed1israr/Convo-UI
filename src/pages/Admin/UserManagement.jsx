@@ -1,5 +1,5 @@
 import { useFetchData } from '6pp';
-import { Avatar, Skeleton } from '@mui/material'; 
+import { Avatar, Skeleton } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import AdminLayout from "../../components/Layout/AdminLayout";
 import Table from '../../components/Shared/Table';
