@@ -9,6 +9,12 @@ const Profile = () => {
     const { user } = useSelector(state => state.auth); // Assuming `auth` is the slice containing user data
 
     useEffect(() => {
+        if (user?.data) {
+            setUserData(user.data);
+        }
+    }, [user]);
+    
+    useEffect(() => {
         if (user && user.data) {
             setUserData(user.data);
         }
@@ -52,7 +58,9 @@ const ProfileCard = ({ text, Icon, heading }) => (
 );
 
 const SkeletonProfile = () => (
-    <Stack className="MuiStack-root css-1u4that-MuiStack-root" style={{}}>
+    <Stack className="MuiStack-root css-1u4that-MuiStack-root" style={{
+        
+    }}>
         <Skeleton variant="circular" width={200} height={201} />
         {[...Array(4)].map((_, index) => (
             <SkeletonCard key={index} />
@@ -61,7 +69,12 @@ const SkeletonProfile = () => (
 );
 
 const SkeletonCard = () => (
-    <Stack className="MuiStack-root css-45wm5i-MuiStack-root">
+    <Stack className="MuiStack-root css-45wm5i-MuiStack-root"
+        style={{
+            marginTop:"10%",
+            
+        }}
+    >
         <Skeleton variant="circular" width={50} height={50} />
         <Stack className="MuiStack-root css-nen11g-MuiStack-root">
             <Skeleton width={100} />

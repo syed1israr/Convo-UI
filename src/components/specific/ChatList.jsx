@@ -20,7 +20,7 @@ const ChatList = ({
       {chats?.map((data, index) => {
         const { avatar, _id, name, groupChat, members } = data;
           
-       
+        
         const newMessageAlert = newMessagesAlert.find(
           (alert) => {
             
