@@ -173,12 +173,27 @@ const LoginForm = ({ handleLogin, toggleLogin, username, password, isLoading }) 
       >
         Login
       </Button>
-      <Typography textAlign={"center"} m={"1rem"}  color={"white"}> 
-        OR
+        <div
+        style={{
+          display:"flex",
+          marginTop:"2rem",
+          
+        }}
+        >
+        <Typography textAlign={"center"} m={"1rem"} 
+        width={"100%"}
+        color={"white"}   
+        > 
+        First Time Here?
       </Typography>
-      <Button disabled={isLoading} fullWidth variant="text" onClick={toggleLogin}>
-        Sign Up Instead
+      <Button 
+      style={{
+        marginLeft:"-2rem"
+      }}
+      disabled={isLoading} fullWidth variant="text" onClick={toggleLogin}>
+        Become a member
       </Button>
+        </div>
     </form>
   </div>
 );
@@ -277,12 +292,27 @@ const SignupForm = ({ handleSignUp, toggleLogin, name, bio, username, password, 
       >
         Sign Up
       </Button>
-      <Typography textAlign={"center"} m={"1rem"} color={"white"} >
-        OR
+      <div
+        style={{
+          display:"flex",
+          marginTop:"2rem",
+          
+        }}
+        >
+        <Typography textAlign={"center"} m={"1rem"} 
+        width={"100%"}
+        color={"white"}   
+        > 
+         Already a member?
       </Typography>
-      <Button disabled={isLoading} fullWidth variant="text" onClick={toggleLogin}>
-        Login Instead
+      <Button 
+      style={{
+        marginLeft:"-2rem"
+      }}
+      disabled={isLoading} fullWidth variant="text" onClick={toggleLogin}>
+        Click to Login
       </Button>
+        </div>
     </form>
   </div>
 );

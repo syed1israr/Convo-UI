@@ -8,26 +8,25 @@ import RenderContent from './RenderContent'
 
 const MessageComponent = ({message, user}) => {
     const {sender, content ,attachments,createdAt}=message
-    const sameSender=sender?._id===user.data?._id
+    const sameSender=sender?._id===user.data._id
     
     const timeAgo=moment(createdAt).fromNow()
   return (
     <motion.div
         initial={{opacity:0,x:"-100%"}}
         whileInView={{opacity:1,x:0}}
-
+        
         style={{
             alignSelf:sameSender? "flex-end"  : "flex-start",
             backgroundColor:"white",
             color:"black",
             borderRadius:"5px",
             padding:"0.5rem",
-            width:"fit-content"
-
+            width:"fit-content",
+            borderRadius:"20px",
+            border:"2px solid rgba(38,38,38,0.1)",
         }}
-    
     >
-
         {!sameSender && <Typography color={LightBlue} fontWeight={"600"} variant='caption'>{sender.name}</Typography>}
         {
             content && <Typography>{content}</Typography>
