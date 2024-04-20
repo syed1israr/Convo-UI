@@ -64,7 +64,9 @@ const Header = () => {
   return (
     <>
       <Box height={'4rem'} sx={{ flexGrow: 1 }}>
-        <AppBar position="static" sx={{ bgcolor: orange }}>
+        <AppBar position="static" sx={{ 
+            bgcolor:`${orange}`
+          }}>
           <Toolbar>
             <Typography variant="h6" sx={{ display: { xs: 'none', sm: 'block' } }}>
                Chat App <ChatBubbleRounded/>
