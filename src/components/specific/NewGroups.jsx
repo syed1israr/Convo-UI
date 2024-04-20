@@ -46,7 +46,7 @@ const NewGroups = () => {
   };
   const submitHandler = () => {
     // Add your logic for submitting the form here
-    if(groupName.value){
+    if(!groupName.value){
       toast.error("Group Name is required")
     }
     if(selectedMembers.length < 2){
