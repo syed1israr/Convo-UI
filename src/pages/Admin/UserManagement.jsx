@@ -1,13 +1,11 @@
+import { useFetchData } from '6pp';
+import { Avatar, Skeleton } from '@mui/material'; 
 import React, { useEffect, useState } from 'react';
-import { DataGrid } from "@mui/x-data-grid";
-import { Paper, Typography, Container, Avatar, Skeleton } from '@mui/material'; // Group related imports together
 import AdminLayout from "../../components/Layout/AdminLayout";
 import Table from '../../components/Shared/Table';
-import { dashboardData } from "../../constants/SampleData";
-import { transoformImage } from "../../lib/Features"
-import { useFetchData } from '6pp';
-import { useErrors } from '../../hooks/hooks';
 import { server } from '../../constants/config';
+import { useErrors } from '../../hooks/hooks';
+import { transoformImage } from "../../lib/Features";
 
 const Columns = [{
     field: "id",
