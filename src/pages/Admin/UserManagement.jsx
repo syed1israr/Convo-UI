@@ -58,15 +58,17 @@ const UserManagement = () => {
   const [rows, setRows] = useState([]);
   console.log("Data",data)
   useEffect(() => {
-    if(data){ setRows(
-      data?.transformedUsers?.map((i) => ({
-        ...i,
-        id: i._id,
-        avatar: transoformImage(i.avatar, 50),
-        friends: i.friendsCount,
-        groups: i.groupCount
-      }))
-    );
+    if(data){
+      setRows(
+        data?.transformedUsers?.map((i) => ({
+          ...i,
+          id: i._id,
+          avatar: transoformImage(i.avatar, 50),
+          friends: i.friendsCount,
+          groups: i.groupCount
+        })) || []
+      );
+      
     }
   }, [data]);
 

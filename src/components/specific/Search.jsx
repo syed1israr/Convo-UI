@@ -23,7 +23,7 @@ const Search = () => {
   const { isSearch } = useSelector((state) => state.misc);
 
   const [searchUser] = useLazySearchUserQuery();
-  
+
   const [sendFriendRequest, isLoadingSendFriendRequest] = useAsyncMutation(
     useSendFriendRequestMutation
   );
@@ -42,10 +42,8 @@ const Search = () => {
 
   useEffect(() => {
     const timeOutId = setTimeout(() => {
-      if(!search.value==""){
-        searchUser(search.value)
-        .then(({ data }) => setUsers(data.users))
-        
+      if (!search.value == "") {
+        searchUser(search.value).then(({ data }) => setUsers(data.users));
       }
     }, 1000);
 
@@ -55,8 +53,13 @@ const Search = () => {
   }, [search.value]);
 
   return (
-    <Dialog open={isSearch} onClose={searchCloseHandler}>
-      <Stack p={"2rem"} direction={"column"} width={"25rem"}>
+    <Dialog
+      open={isSearch}
+      onClose={searchCloseHandler}
+      maxWidth="xs"
+      fullWidth
+    >
+      <Stack p={"2rem"} direction={"column"} width={"100%"}>
         <DialogTitle textAlign={"center"}>Find People</DialogTitle>
         <TextField
           label=""
@@ -71,29 +74,26 @@ const Search = () => {
               </InputAdornment>
             ),
           }}
+          fullWidth
+          margin="normal"
         />
 
-       {
-        search.value=="" ? 
-        <Typography
-        sx={{
-          marginLeft:"5rem",
-          marginTop:"2rem",
-          
-        }}
-         >  Start Typing to See List </Typography>
-         : 
-        <List>
-        {users.map((i) => (
-          <UserItem
-            user={i}
-            key={i._id}
-            handler={addFriendHandler}
-            handlerIsLoading={isLoadingSendFriendRequest}
-          />
-        ))}
-      </List>
-       }
+        {search.value == "" ? (
+          <Typography sx={{ marginLeft: "1rem", marginTop: "1rem" }}>
+            Start Typing to See List
+          </Typography>
+        ) : (
+          <List>
+            {users.map((i) => (
+              <UserItem
+                user={i}
+                key={i._id}
+                handler={addFriendHandler}
+                handlerIsLoading={isLoadingSendFriendRequest}
+              />
+            ))}
+          </List>
+        )}
       </Stack>
     </Dialog>
   );
