@@ -1,4 +1,4 @@
-export const server=  "http://localhost:3000"
+export const server=  "https://chat-server-8iii.onrender.com"
 
 
 //  "https://chat-server-8iii.onrender.com"
