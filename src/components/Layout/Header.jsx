@@ -69,7 +69,7 @@ const Header = () => {
           }}>
           <Toolbar>
             <Typography variant="h6" sx={{ display: { xs: 'none', sm: 'block' } }}>
-               Chat App <ChatBubbleRounded/>
+               ConvoConnect <ChatBubbleRounded/>
             </Typography>
             <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
               <IconButton color="inherit" onClick={handleMobile}>
