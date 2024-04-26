@@ -5,10 +5,14 @@ import React, { memo } from 'react'
 import { LightBlue } from '../../constants/Color'
 import { fileFormat } from '../../lib/Features'
 import RenderContent from './RenderContent'
+import { useSelector } from 'react-redux'
 
-const MessageComponent = ({message, user}) => {
+const MessageComponent = ({message}) => {
+
+        const { user }=  useSelector(state=> state.auth)
+        console.log(user)
     const {sender, content ,attachments,createdAt}=message
-    const sameSender=sender?._id===user?.data?._id
+    const sameSender=sender?._id===((user?.data?._id) || (user?._id))
     
     const timeAgo=moment(createdAt).fromNow()
   return (

@@ -185,7 +185,7 @@ const Chat = ({ chatId }) => {
         }}
       >
         {!allMessages.isLoading &&  allMessages.map((i) => (
-          <MessageComponent key={i._id} message={i} user={user} />
+          <MessageComponent key={i._id} message={i}  />
         ))}
         {userTyping && <TypingLoader />}
         <div ref={bottomRef} />
