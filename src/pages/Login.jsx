@@ -71,7 +71,8 @@ const Login = () => {
 
   return (
     <div
-      
+   
+    style={{ backgroundImage: `url(${myImage})`, backgroundSize: 'cover', minHeight: '100vh' }}
     >
       <Container
         component={"main"}
@@ -126,7 +127,7 @@ const Login = () => {
 const LoginForm = ({ handleLogin, toggleLogin, username, password, isLoading }) => (
   <div style={{ height: "50vh", padding: "1.2rem 2rem", color: "white" }}>
     <Typography   marginLeft={"1rem"} variant="h5"
-    color={"#4C4C4C"} >
+    color={"white"} >
       Login
     </Typography>
     <form style={{ width: "100%", marginTop: "1rem" }} onSubmit={handleLogin}>
@@ -177,7 +178,7 @@ const LoginForm = ({ handleLogin, toggleLogin, username, password, isLoading }) 
         >
         <Typography textAlign={"center"} m={"1rem"} 
         width={"100%"}
-        color={"#4C4C4C"}   
+        color={"white"}   
         > 
         First Time Here?
       </Typography>
@@ -296,7 +297,7 @@ const SignupForm = ({ handleSignUp, toggleLogin, name, bio, username, password, 
         >
         <Typography textAlign={"center"} m={"1rem"} 
         width={"100%"}
-        color={"#4C4C4C"} 
+        color={"white"} 
         > 
          Already a member?
       </Typography>
