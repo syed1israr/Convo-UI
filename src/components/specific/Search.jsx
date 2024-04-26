@@ -21,8 +21,7 @@ import UserItem from "../Shared/UserItem.jsx";
 
 const Search = () => {
   const { isSearch } = useSelector((state) => state.misc);
-  const { user } = useSelector((state) => state.auth); // Corrected the syntax
-
+  const  { user } = useSelector(state=>state.auth)
   const [searchUser] = useLazySearchUserQuery();
 
   const [sendFriendRequest, isLoadingSendFriendRequest] = useAsyncMutation(
@@ -36,10 +35,22 @@ const Search = () => {
   const [users, setUsers] = useState([]);
 
   const addFriendHandler = async (id) => {
-    await sendFriendRequest({ userId: id }); // Removed loading message
+    await sendFriendRequest("Sending friend request...", { userId: id });
   };
 
   const searchCloseHandler = () => dispatch(setIsSearch(false));
+
+  useEffect(() => {
+    const timeOutId = setTimeout(() => {
+      if (!search.value == "") {
+        searchUser(search.value).then(({ data }) => setUsers(data.users));
+      }
+    }, 1000);
+
+    return () => {
+      clearTimeout(timeOutId);
+    };
+  }, [search.value]);
 
 
   return (
@@ -54,7 +65,7 @@ const Search = () => {
         <TextField
           label=""
           value={search.value}
-          onChange={search.onChange} // Changed to search.onChange
+          onChange={search.changeHandler}
           variant="outlined"
           size="small"
           InputProps={{
@@ -68,22 +79,20 @@ const Search = () => {
           margin="normal"
         />
 
-        {search.value === "" ? ( // Changed condition to check if search value is empty
+        {search.value == "" ? (
           <Typography sx={{ marginLeft: "1rem", marginTop: "1rem" }}>
             Start Typing to See List
           </Typography>
         ) : (
           <List>
-            {users
-              .filter(u => u._id !== (user?._id || user?.data?._id)) 
-              .map((i) => (
-                <UserItem
-                  user={i}
-                  key={i._id}
-                  handler={addFriendHandler}
-                  handlerIsLoading={isLoadingSendFriendRequest}
-                />
-              ))}
+            {users?.filter(u=>u._id!==(user?._id || user?.data?._id))?.map((i) => (
+              <UserItem
+                user={i}
+                key={i._id}
+                handler={addFriendHandler}
+                handlerIsLoading={isLoadingSendFriendRequest}
+              />
+            ))}
           </List>
         )}
       </Stack>
