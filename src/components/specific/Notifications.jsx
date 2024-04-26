@@ -35,6 +35,7 @@ const Notifications = () => {
   const closeHandler = () => dispatch(setIsNotification(false));
 
   useErrors([{ error, isError }]);
+  
   return (
     <Dialog open={isNotification} onClose={closeHandler}>
       <Stack p={{ xs: "1rem", sm: "2rem" }} maxWidth={"25rem"}>
@@ -73,7 +74,7 @@ const NotificationItem = memo(({ sender, _id, handler }) => {
         spacing={"1rem"}
         width={"100%"}
       >
-        <Avatar  />
+        <Avatar src={avatar}  />
 
         <Typography
           variant="body1"
