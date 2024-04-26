@@ -21,7 +21,7 @@ import UserItem from "../Shared/UserItem.jsx";
 
 const Search = () => {
   const { isSearch } = useSelector((state) => state.misc);
-
+  const  { user } = useSelector(state=>state.auth)
   const [searchUser] = useLazySearchUserQuery();
 
   const [sendFriendRequest, isLoadingSendFriendRequest] = useAsyncMutation(
@@ -84,7 +84,7 @@ const Search = () => {
           </Typography>
         ) : (
           <List>
-            {users?.map((i) => (
+            {users?.filter(u=>u._id!==user._id)?.map((i) => (
               <UserItem
                 user={i}
                 key={i._id}
