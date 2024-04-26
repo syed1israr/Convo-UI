@@ -32,6 +32,7 @@ const AppLayout = (WrappedComponent) => {
 
         const { isMobile } = useSelector(state => state.misc);
         const { user } = useSelector(state => state.auth);
+        
         const { newMessagesAlert } = useSelector((state) => state.chat);
        
        
@@ -144,7 +145,7 @@ const AppLayout = (WrappedComponent) => {
                         sx={{ display: { xs: "none", md: "block" }, padding: "2rem", bgcolor: "rgba(0,0,0,0.85)" }}
                         height={"100%"}
                     >
-                    <Profile />
+                    <Profile  user={user}/>
                     </Grid>
                 </Grid>
             </>

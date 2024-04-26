@@ -177,11 +177,11 @@ const Chat = ({ chatId }) => {
         sx={{
           overflowX: "hidden",
           overflowY: "auto",
-          backgroundSize: "cover", // Use cover to make the image fit perfectly within the Stack
+          backgroundSize: "cover",
           "&::-webkit-scrollbar": {
-            display: "none", // Hide the scrollbar in WebKit (Chrome, Safari, etc.)
+            display: "none", 
           },
-          scrollbarWidth: "none", // Hide the scrollbar in Firefox
+          scrollbarWidth: "none", 
         }}
       >
         {!allMessages.isLoading &&  allMessages.map((i) => (

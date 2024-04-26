@@ -1,86 +1,62 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from "react-redux";
+import React from "react";
+import { Avatar, Stack, Typography } from "@mui/material";
+import {
+  Face as FaceIcon,
+  AlternateEmail as UserNameIcon,
+  CalendarMonth as CalendarIcon,
+} from "@mui/icons-material";
 import moment from "moment";
-import { Avatar, Skeleton, Stack, Typography } from '@mui/material';
-import { CalendarMonth as CalendarIcon, Face as FaceIcon, AlternateEmail as UsernameIcon } from "@mui/icons-material";
+import { useSelector } from "react-redux";
+
 
 const Profile = () => {
-    const [userData, setUserData] = useState(null);
-    const { user } = useSelector(state => state.auth); // Assuming `auth` is the slice containing user data
-
-    useEffect(() => {
-        if (user?.data) {
-            setUserData(user.data);
-        }
-    }, [user]);
+    const { user } =  useSelector(state => state.auth)
     
-    useEffect(() => {
-        if (user && user.data) {
-            setUserData(user.data);
-        }
-    }, [user]);
-
-    if (!userData) {
-        return (
-            <SkeletonProfile />
-        );
-    }
-    return (
-        <Stack spacing={"2rem"} direction={"column"} alignItems={"center"}>
-            <AvatarProfile userData={userData} />
-            <ProfileCard heading={"bio"} text={userData.bio} />
-            <ProfileCard heading={"Username"} text={userData.username} Icon={UsernameIcon} />
-            <ProfileCard heading={"name"} text={userData.name} Icon={FaceIcon} />
-            <ProfileCard heading={"Joined"} text={moment(userData.createdAt).fromNow()} Icon={CalendarIcon} />
-        </Stack>
-    );
+  return (
+    <Stack spacing={"2rem"} direction={"column"} alignItems={"center"}>
+      <Avatar
+        src={(user?.data?.avatar?.url) ||(user?.avatar?.url) }
+        sx={{
+          width: 200,
+          height: 200,
+          objectFit: "contain",
+          marginBottom: "1rem",
+          border: "5px solid white",
+        }}
+      />
+      <ProfileCard heading={"Bio"} text={(user?.bio) || (user?.data?.bio) } />
+      <ProfileCard
+        heading={"Username"}
+        text={(user?.username) ||(user?.data?.username) }
+        Icon={<UserNameIcon />}
+      />
+      <ProfileCard heading={"Name"} text={(user?.name) || (user?.data?.name)} Icon={<FaceIcon />} />
+      <ProfileCard
+        heading={"Joined"}
+        text={moment((user?.createdAt) || (user?.data?.createdAt)).fromNow()}
+        Icon={<CalendarIcon />}
+      />
+    </Stack>
+  );
 };
 
-const AvatarProfile = ({ userData }) => (
-    <Avatar src={userData.avatar.url}
-        sx={{
-            width: 200,
-            height: 200,
-            objectFit: "contain",
-            marginBottom: "1rem",
-            border: "5px solid white"
-        }} />
-);
-
 const ProfileCard = ({ text, Icon, heading }) => (
-    <Stack direction={"row"} alignItems={"center"} color={"white"} textAlign={"center"} spacing={"1rem"}>
-        {Icon && <Icon />}
-        <Stack>
-            <Typography variant='body1'>{text}</Typography>
-            <Typography color={"grey"} variant='caption'>{heading}</Typography>
-        </Stack>
-    </Stack>
-);
+  <Stack
+    direction={"row"}
+    alignItems={"center"}
+    spacing={"1rem"}
+    color={"white"}
+    textAlign={"center"}
+  >
+    {Icon && Icon}
 
-const SkeletonProfile = () => (
-    <Stack className="MuiStack-root css-1u4that-MuiStack-root" style={{
-        marginLeft:"15%",
-    }}>
-        <Skeleton variant="circular" width={200} height={201} />
-        {[...Array(4)].map((_, index) => (
-            <SkeletonCard key={index} />
-        ))}
+    <Stack>
+      <Typography variant="body1">{text}</Typography>
+      <Typography color={"gray"} variant="caption">
+        {heading}
+      </Typography>
     </Stack>
-);
-
-const SkeletonCard = () => (
-    <Stack className="MuiStack-root css-45wm5i-MuiStack-root"
-        style={{
-            marginTop:"10%",
-            marginLeft:"25%",
-        }}
-    >
-        <Skeleton variant="circular" width={50} height={50} />
-        <Stack className="MuiStack-root css-nen11g-MuiStack-root">
-            <Skeleton width={100} />
-            <Skeleton width={80} />
-        </Stack>
-    </Stack>
+  </Stack>
 );
 
 export default Profile;
