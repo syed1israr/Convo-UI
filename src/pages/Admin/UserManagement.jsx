@@ -56,7 +56,7 @@ const UserManagement = () => {
     error:error
   }])
   const [rows, setRows] = useState([]);
-  console.log("Data",data)
+  
   useEffect(() => {
     if(data){
       setRows(

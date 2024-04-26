@@ -13,7 +13,7 @@ import { useSendAttachmentsMutation } from "../../redux/api";
 
 const FileMenu = ({ anchorE1, chatId }) => {
   const { isFileMenu } = useSelector((state) => state.misc);
- 
+
   const dispatch = useDispatch();
 
   const imageRef = useRef(null);
@@ -50,7 +50,7 @@ const FileMenu = ({ anchorE1, chatId }) => {
       files.forEach((file) => myForm.append("files", file));
 
       const res = await sendAttachments(myForm);
-     
+
       if (res.data) toast.success(`${key} sent successfully`, { id: toastId });
       else toast.error(`Failed to send ${key}`, { id: toastId });
 
@@ -71,7 +71,7 @@ const FileMenu = ({ anchorE1, chatId }) => {
       >
         <MenuList>
           <MenuItem onClick={selectImage}>
-            <Tooltip>
+            <Tooltip title="Image">
               <ImageIcon />
             </Tooltip>
             <ListItemText style={{ marginLeft: "0.5rem" }}>Image</ListItemText>
@@ -86,7 +86,7 @@ const FileMenu = ({ anchorE1, chatId }) => {
           </MenuItem>
 
           <MenuItem onClick={selectAudio}>
-            <Tooltip >
+            <Tooltip title="Audio">
               <AudioFileIcon />
             </Tooltip>
             <ListItemText style={{ marginLeft: "0.5rem" }}>Audio</ListItemText>
@@ -101,7 +101,7 @@ const FileMenu = ({ anchorE1, chatId }) => {
           </MenuItem>
 
           <MenuItem onClick={selectVideo}>
-            <Tooltip >
+            <Tooltip title="Video">
               <VideoFileIcon />
             </Tooltip>
             <ListItemText style={{ marginLeft: "0.5rem" }}>Video</ListItemText>
@@ -116,7 +116,7 @@ const FileMenu = ({ anchorE1, chatId }) => {
           </MenuItem>
 
           <MenuItem onClick={selectFile}>
-            <Tooltip >
+            <Tooltip title="File">
               <UploadFileIcon />
             </Tooltip>
             <ListItemText style={{ marginLeft: "0.5rem" }}>File</ListItemText>
