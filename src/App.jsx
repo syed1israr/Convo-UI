@@ -15,7 +15,7 @@ const Login = lazy(() => import("./pages/Login"));
 const Chat = lazy(() => import("./pages/Chat"));
 const Groups = lazy(() => import("./pages/Groups"));
 const NotFound=lazy(()=> import("./pages/NotFound"));
-const  AdminLogin=lazy(()=> import("./pages/Admin/AdminLogin"))
+const AdminLogin=lazy(()=> import("./pages/Admin/AdminLogin"))
 const UserManagement =lazy(()=> import("./pages/Admin/UserManagement"))
 const ChatManagement=lazy(()=> import("./pages/Admin/ChatManagement"))
 const MessageManagement=lazy(()=> import("./pages/Admin/MessageManagement"))
@@ -43,11 +43,11 @@ const dispatch= useDispatch()
         <Route element={<SocketProvider>
           <ProtectRoute user={user}/>
         </SocketProvider>}>
-          <Route path='/' element={<Home />} />
-          <Route path='/chat/:chatId' element={<Chat />} />
-          <Route path='/groups' element={<Groups />} />
+          <Route path='/' element={<Home/>} />
+          <Route path='/chat/:chatId' element={<Chat/>} />
+          <Route path='/groups' element={<Groups/>} />
         </Route>
-        <Route path='/login' element={<ProtectRoute user={!user} redirect='/'><Login /></ProtectRoute>} />
+        <Route path='/login' element={<ProtectRoute user={!user} redirect='/'><Login/></ProtectRoute>} />
      
       <Route path='/admin' element={<AdminLogin/>}/>
       <Route path='/admin/dashboard' element={<Dashboard/>}/>

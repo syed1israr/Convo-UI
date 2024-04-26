@@ -1,4 +1,5 @@
 import {
+  ChatBubbleOutlineOutlined,
   Close as CloseIcon,
   Dashboard as DashboardIcon,
   ExitToApp as ExitToAppIcon,
@@ -66,7 +67,7 @@ const Sidebar = ({ w = "100%" }) => {
   return (
     <Stack width={w} direction={"column"} p={"3rem"} spacing={"3rem"}>
       <Typography variant="h5" textTransform={"uppercase"}>
-        Faraz ka chat APp
+        ConvoConnect <ChatBubbleOutlineOutlined/>
       </Typography>
 
       <Stack spacing={"1rem"}>
