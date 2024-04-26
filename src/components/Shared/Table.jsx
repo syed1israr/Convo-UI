@@ -2,7 +2,7 @@ import { Container, Paper, Typography } from '@mui/material';
 import { DataGrid } from "@mui/x-data-grid";
 import React from 'react';
 
-const Table = ({ rows, columns, heading, rowheight = 52 }) => { // Fix typo in props
+const Table = ({ rows, columns, heading, rowheight = 52 }) => { 
     return (
       <Container
         sx={{
@@ -35,8 +35,8 @@ const Table = ({ rows, columns, heading, rowheight = 52 }) => { // Fix typo in p
             columns={columns}
             sx={{
               border: "none",
-              "& .MuiDataGrid-colCell": { // Correct class for header customization
-                backgroundColor: "black", // Use camelCase for CSS properties
+              "& .MuiDataGrid-colCell": { 
+                backgroundColor: "black",
                 color: "white"
               }
             }}

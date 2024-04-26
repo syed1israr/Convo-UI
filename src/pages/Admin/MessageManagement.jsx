@@ -8,7 +8,7 @@ import Table from '../../components/Shared/Table';
 import { server } from '../../constants/config';
 import { useErrors } from '../../hooks/hooks';
 import { fileFormat, transoformImage } from "../../lib/Features";
-// Import Avatar component if not already imported
+
 
 const Columns = [{
     field: "id",
@@ -90,12 +90,12 @@ const MessageManagement = () => {
         if(data){
             setRows(data?.transformedMessages.map((message, index) => ({
                 ...message,
-                id: message._id, // Ensure each row has a unique id property
+                id: message._id, 
                 sender: {
                     name: message.sender.name,
                     avatar: transoformImage(message.sender.avatar, 50)
                 },
-                createdAt: moment(message.createdAt).format("YYYY-MM-DD HH:mm:ss") // Adjust format as needed
+                createdAt: moment(message.createdAt).format("YYYY-MM-DD HH:mm:ss")
             })));
         }
   }, [data]);

@@ -1,11 +1,11 @@
 import moment from "moment";
 
 const fileFormat = (url = "") => {
-    const fileExtension = url.split(".").pop().toLowerCase(); // Convert to lower case for case insensitivity
+    const fileExtension = url.split(".").pop().toLowerCase(); 
     if (fileExtension === "mp4" || fileExtension === "webm" || fileExtension === "ogg") return "video";
-    if (fileExtension === "mp3" || fileExtension === "wav") return "audio"; // Corrected file extension "wave" to "wav"
+    if (fileExtension === "mp3" || fileExtension === "wav") return "audio"; 
     if (fileExtension === "png" || fileExtension === "jpeg" || fileExtension === "gif" || fileExtension === "jpg") return "image";
-    return "file"; // Corrected returning "file" instead of file
+    return "file";
 }
 
 const transoformImage= (url = "",width=100)=>

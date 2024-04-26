@@ -45,7 +45,7 @@ const NewGroups = () => {
     );
   };
   const submitHandler = () => {
-    // Add your logic for submitting the form here
+    
     if(!groupName.value){
       toast.error("Group Name is required")
     }
@@ -53,7 +53,7 @@ const NewGroups = () => {
       toast.error("Please select Atleast 3 Members")
     }
     
-    //create Group
+   
     newGroup("Creating New Group...",{name:groupName.value , members:selectedMembers })
 
     CloseHandler()

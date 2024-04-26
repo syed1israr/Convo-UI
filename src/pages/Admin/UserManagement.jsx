@@ -10,38 +10,38 @@ import { transoformImage } from "../../lib/Features";
 const Columns = [{
     field: "id",
     headerName: "ID",
-    headerClassName: "MuiDataGrid-colCell", // Correct property name for header class
+    headerClassName: "MuiDataGrid-colCell", 
     width: 200
   },
   {
     field: "avatar",
     headerName: "Avatar",
     width: 150,
-    headerClassName: "MuiDataGrid-colCell", // Correct property name for header class
+    headerClassName: "MuiDataGrid-colCell",
     renderCell: (params) => <Avatar alt={params.row.name} src={params.row.avatar} />
   },
   {
     field: "name",
     headerName: "name",
-    headerClassName: "MuiDataGrid-colCell", // Correct property name for header class
+    headerClassName: "MuiDataGrid-colCell", 
     width: 200,
   },
   {
     field: "username",
     headerName: "Username",
-    headerClassName: "MuiDataGrid-colCell", // Correct property name for header class
+    headerClassName: "MuiDataGrid-colCell", 
     width: 200,
   },
   {
     field: "friends",
     headerName: "Friends",
-    headerClassName: "MuiDataGrid-colCell", // Correct property name for header class
+    headerClassName: "MuiDataGrid-colCell", 
     width: 150,
   },
   {
     field: "groups",
     headerName: "Groups",
-    headerClassName: "MuiDataGrid-colCell", // Correct property name for header class
+    headerClassName: "MuiDataGrid-colCell", 
     width: 200,
   },
 ];

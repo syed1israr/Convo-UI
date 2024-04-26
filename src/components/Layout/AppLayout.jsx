@@ -46,7 +46,7 @@ const AppLayout = (WrappedComponent) => {
        
         
 
-        // Handler for deleting a chat
+        
         const handleDeleteChat = (e, chatId, groupChat) => {
             dispatch(setIsDeleteMenu(true));
             dispatch(setSelectedDeleteChat({ chatId, groupChat }));
