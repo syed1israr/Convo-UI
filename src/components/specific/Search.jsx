@@ -84,7 +84,7 @@ const Search = () => {
           </Typography>
         ) : (
           <List>
-            {users?.filter(u=>u._id!==user._id)?.map((i) => (
+            {users?.filter(u=>u._id!==(user?._id || user?.data?._id)?.map((i) => (
               <UserItem
                 user={i}
                 key={i._id}
