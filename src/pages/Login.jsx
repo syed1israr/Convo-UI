@@ -72,7 +72,12 @@ const Login = () => {
   return (
     <div
    
-    style={{ backgroundImage: `url(${myImage})`, backgroundSize: 'cover', minHeight: '100vh' }}
+    style={{ 
+      backgroundImage: `url(${myImage})`, 
+      backgroundSize: 'cover',
+      minHeight: '100vh',
+      backgroundRepeat:"no-repeat"
+  }}
     >
       <Container
         component={"main"}
