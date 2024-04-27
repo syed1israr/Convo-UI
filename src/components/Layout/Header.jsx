@@ -10,6 +10,7 @@ import { server } from "../../constants/config.js";
 import { userNotExists } from "../../redux/reducers/auth.js";
 import { resetNotificationCount } from '../../redux/reducers/chat.js';
 import { setIsMobile, setIsNewGroup, setIsNotification, setIsSearch } from '../../redux/reducers/misc.js';
+import { motion } from 'framer-motion';
 
 
 const SearchDialog = lazy(() => import('../specific/Search'));
@@ -106,10 +107,13 @@ const Header = () => {
   );
 };
 
-
-  const IconBtn = ({ title, icon, onClick, value }) => {
-    return (
-      <Tooltip title={title}>
+const IconBtn = ({ title, icon, onClick, value }) => {
+  return (
+    <Tooltip title={title}>
+      <motion.div
+        animate={{ x: value !== 0 ? [-3, 3, -3, 3, -2, 2, -1, 1, 0] : 0 }}
+        transition={{ duration: 0.3 }}
+        whileHover={{ scale: 1.1 }}>
         <IconButton color="inherit" size="large" onClick={onClick}>
           {value ? (
             <Badge badgeContent={value} color="error">
@@ -119,9 +123,12 @@ const Header = () => {
             icon
           )}
         </IconButton>
-      </Tooltip>
-    );
+      </motion.div>
+    </Tooltip>
+  );
 };
+
+
 
 
 export default Header;
