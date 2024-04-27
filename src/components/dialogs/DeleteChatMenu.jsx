@@ -78,12 +78,18 @@ const DeleteChatMenu = ({ dispatch, deleteMenuAnchor }) => {
         {isGroup ? (
           <>
             <ExitToAppIcon />
+            <stack>
             <Typography>Leave Group</Typography>
+             <Typography variant="body2" color={"error"}>You will loose All chats</Typography>
+            </stack>
           </>
         ) : (
           <>
             <DeleteIcon />
-            <Typography>Delete Chat</Typography>
+            <Stack>
+            <Typography width={"120px"} >Remove Friend?</Typography>
+            <Typography variant="body2" color={"error"}>You will loose All chats</Typography>
+            </Stack>
           </>
         )}
       </Stack>
