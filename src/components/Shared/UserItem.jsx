@@ -4,12 +4,12 @@ import React, { memo } from 'react';
 
 const UserItem = ({ user, handler, handlerisLoading,isAdded=false ,styling={} }) => {
   const { name, _id, avatar  } = user;
-
+  
   return (
     <ListItem>
       <Stack direction="row" alignItems="center" spacing={1} width="100%"
       {...styling}>
-        <Avatar  src={avatar}/>
+        <Avatar  src={avatar.url ? avatar.url : avatar}/>
         <Typography
           variant="body1"
           sx={{

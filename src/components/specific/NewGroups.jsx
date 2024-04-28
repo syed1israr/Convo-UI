@@ -61,7 +61,7 @@ const NewGroups = () => {
   const CloseHandler=()=>{
     dispatch(setIsNewGroup(false))
   }
-
+ 
   return (
     <Dialog open={true} onClose={CloseHandler} > 
       <Stack p={{ xs: "1rem", sm: "3rem" }} width="25rem" spacing={"2rem"}>
@@ -77,6 +77,7 @@ const NewGroups = () => {
         <Typography variant="body1" mt={2} mb={1}>
           Members
         </Typography>
+      
         <Stack spacing={1}>
           { isLoading? <Skeleton/> : data.friends.map((user) => (
             <UserItem
