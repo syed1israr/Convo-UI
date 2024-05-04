@@ -9,8 +9,8 @@ import { useSelector } from 'react-redux'
 
 const MessageComponent = ({message}) => {
 
-        const { user }=  useSelector(state=> state.auth)
-        console.log(user)
+    const { user }=  useSelector(state=> state.auth)
+        
     const {sender, content ,attachments,createdAt}=message
     const sameSender=sender?._id===((user?.data?._id) || (user?._id))
     
