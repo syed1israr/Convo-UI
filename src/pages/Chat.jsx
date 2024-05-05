@@ -34,7 +34,7 @@ const Chat = ({ chatId }) => {
 
   const chatDetails = useChatDetailsQuery({ chatId, skip: !chatId });
   const  oldMEssagesChunk = useGetMessagesQuery({chatId,page})
-    console.log("chat details",chatDetails)
+
   const [IamTyping, setIamTyping] = useState(false);
   const [userTyping, setUserTyping] = useState(false);
   const typingTimeout = useRef(null);
@@ -106,7 +106,8 @@ const Chat = ({ chatId }) => {
   useEffect(() => {
     if (chatDetails.isError) return navigate("/");
   }, [chatDetails.isError]);
-
+   
+  const otherUseravatarURL=chatDetails?.data?.chat?.members[0]?.avatar
   const newMessagesListener = useCallback(
     (data) => {
       if (data.chatId !== chatId) return;
@@ -164,7 +165,7 @@ const Chat = ({ chatId }) => {
   useSocketEvents(socket, eventHandler);
   useErrors(errors);
   const allMessages = [...oldMessages, ...messages];
-
+  
   return chatDetails.isLoading ? <Skeleton /> : (
     <>
       <Stack
@@ -185,7 +186,7 @@ const Chat = ({ chatId }) => {
         }}
       >
         {!allMessages.isLoading &&  allMessages.map((i) => (
-          <MessageComponent key={i._id} message={i}  />
+          <MessageComponent key={i._id} message={i} otherUserURl={otherUseravatarURL} />
         ))}
         {userTyping && <TypingLoader />}
         <div ref={bottomRef} />

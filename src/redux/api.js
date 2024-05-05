@@ -53,7 +53,7 @@ const api = createApi({
     }),
 
     chatDetails: builder.query({
-      query: ({ chatId, populate = false }) => {
+      query: ({ chatId, populate = true }) => {
         let url = `chat/${chatId}`;
         if (populate) url += "?populate=true";
 
