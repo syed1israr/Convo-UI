@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Typography , Avatar } from '@mui/material'
 import { motion } from "framer-motion"
 import moment from 'moment'
 import React, { memo } from 'react'
@@ -12,6 +12,7 @@ const MessageComponent = ({message}) => {
     const { user }=  useSelector(state=> state.auth)
         
     const {sender, content ,attachments,createdAt}=message
+    
     const sameSender=sender?._id===((user?.data?._id) || (user?._id))
     
     const timeAgo=moment(createdAt).fromNow()
@@ -31,7 +32,19 @@ const MessageComponent = ({message}) => {
             border:"2px solid rgba(38,38,38,0.1)",
         }}
     >
-        {!sameSender && <Typography color={LightBlue} fontWeight={"600"} variant='caption'>{sender.name}</Typography>}
+       <div
+       style={{
+        display:"flex",
+        flexDirection:"row-reverse",
+        gap:"4px",
+        alignItems:attachments ? "" : "center",
+       }}
+       >
+       {
+        sameSender && <Avatar src={user?.data?.avatar?.url}/>
+        }
+       <div>
+       {!sameSender && <Typography color={"#2694ab"} fontWeight={"600"} variant='caption'>{sender.name}</Typography>}
         {
             content && <Typography>{content}</Typography>
         }
@@ -51,6 +64,8 @@ const MessageComponent = ({message}) => {
         )
         }
         <Typography variant='caption' color={"text.secondary"}>{timeAgo}</Typography>
+       </div>
+       </div>
     </motion.div>
   )
 }
