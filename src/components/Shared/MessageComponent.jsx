@@ -36,12 +36,12 @@ const MessageComponent = ({message}) => {
        style={{
         display:"flex",
         flexDirection:"row-reverse",
-        gap:"4px",
+        gap:"10px",
         alignItems:attachments ? "" : "center",
        }}
        >
        {
-        sameSender && <Avatar src={user?.data?.avatar?.url}/>
+        sameSender && <Avatar src={(user?.data?.avatar?.url) || (user?.avatar?.url)}/>
         }
        <div>
        {!sameSender && <Typography color={"#2694ab"} fontWeight={"600"} variant='caption'>{sender.name}</Typography>}

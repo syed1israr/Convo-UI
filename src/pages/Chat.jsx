@@ -34,7 +34,7 @@ const Chat = ({ chatId }) => {
 
   const chatDetails = useChatDetailsQuery({ chatId, skip: !chatId });
   const  oldMEssagesChunk = useGetMessagesQuery({chatId,page})
-  
+    console.log("chat details",chatDetails)
   const [IamTyping, setIamTyping] = useState(false);
   const [userTyping, setUserTyping] = useState(false);
   const typingTimeout = useRef(null);
