@@ -165,8 +165,7 @@ const Chat = ({ chatId }) => {
   useSocketEvents(socket, eventHandler);
   useErrors(errors);
   const allMessages = [...oldMessages, ...messages];
-  console.log("oldMessages",oldMessages)
-  console.log("messages",messages)
+  console.log("allMessages",allMessages)
   return chatDetails.isLoading ? <Skeleton /> : (
     <>
       <Stack

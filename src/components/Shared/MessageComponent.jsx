@@ -35,7 +35,7 @@ const MessageComponent = ({message}) => {
        <div
        style={{
         display:"flex",
-        flexDirection: sameSender ? "row-reverse":"row",
+        flexDirection: "row-reverse",
         gap:"10px",
         alignItems:attachments ? "" : "center",
        }}
