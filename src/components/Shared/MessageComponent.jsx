@@ -2,17 +2,23 @@ import { Box, Typography , Avatar } from '@mui/material'
 import { motion } from "framer-motion"
 import moment from 'moment'
 import React, { memo } from 'react'
-import { LightBlue } from '../../constants/Color'
+
 import { fileFormat } from '../../lib/Features'
 import RenderContent from './RenderContent'
 import { useSelector } from 'react-redux'
+import { useChatDetailsQuery } from '../../redux/api'
+import { useParams } from 'react-router-dom'
 
 const MessageComponent = ({message}) => {
 
-    const { user }=  useSelector(state=> state.auth)
-        
+    const { user }=  useSelector(state=> state.auth);
+    const params = useParams();
+    const chatId = params.chatId;
     const {sender, content ,attachments,createdAt}=message
+    const chatDetails = useChatDetailsQuery({ chatId, skip: !chatId ,populate :true});
     
+    const otherUserUrl = chatDetails?.data?.chat?.members[0].avatar
+
     const sameSender=sender?._id===((user?.data?._id) || (user?._id))
     
     const timeAgo=moment(createdAt).fromNow()
@@ -35,13 +41,13 @@ const MessageComponent = ({message}) => {
        <div
        style={{
         display:"flex",
-        flexDirection: "row-reverse",
+        flexDirection: sameSender ? "row-reverse" : "row",
         gap:"10px",
         alignItems:attachments ? "" : "center",
        }}
        >
        {
-        sameSender &&  <Avatar src={(user?.data?.avatar?.url) || (user?.avatar?.url)}/> 
+        sameSender ?  <Avatar src={(user?.data?.avatar?.url) || (user?.avatar?.url)}/> :  <Avatar src={otherUserUrl}/> 
         }
        <div>
        {!sameSender && <Typography color={"#2694ab"} fontWeight={"600"} variant='caption'>{sender.name}</Typography>}

@@ -165,7 +165,7 @@ const Chat = ({ chatId }) => {
   useSocketEvents(socket, eventHandler);
   useErrors(errors);
   const allMessages = [...oldMessages, ...messages];
-  console.log("allMessages",allMessages)
+  
   return chatDetails.isLoading ? <Skeleton /> : (
     <>
       <Stack
@@ -186,7 +186,7 @@ const Chat = ({ chatId }) => {
         }}
       >
         {!allMessages.isLoading &&  allMessages.map((i) => (
-          <MessageComponent key={i._id} message={i} />
+          <MessageComponent key={i._id} message={i}  />
         ))}
         {userTyping && <TypingLoader />}
         <div ref={bottomRef} />
