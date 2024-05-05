@@ -7,7 +7,7 @@ import { fileFormat } from '../../lib/Features'
 import RenderContent from './RenderContent'
 import { useSelector } from 'react-redux'
 
-const MessageComponent = ({message,otherUserURl}) => {
+const MessageComponent = ({message}) => {
 
     const { user }=  useSelector(state=> state.auth)
         
@@ -41,7 +41,7 @@ const MessageComponent = ({message,otherUserURl}) => {
        }}
        >
        {
-        sameSender ? <Avatar src={(user?.data?.avatar?.url) || (user?.avatar?.url)}/> : <Avatar src={otherUserURl}/>
+        sameSender &&  <Avatar src={(user?.data?.avatar?.url) || (user?.avatar?.url)}/> 
         }
        <div>
        {!sameSender && <Typography color={"#2694ab"} fontWeight={"600"} variant='caption'>{sender.name}</Typography>}

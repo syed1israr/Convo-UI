@@ -9,7 +9,7 @@ import { TypingLoader } from "../components/Layout/Loaders";
 import MessageComponent from '../components/Shared/MessageComponent';
 import { InputBox } from '../components/Styles/StyledComponent';
 import FileMenu from '../components/dialogs/FileMenu';
-import { CustomeGray, LightBlue, orange } from '../constants/Color';
+import { CustomeGray, orange } from '../constants/Color';
 import { ALERT, CHAT_JOINED, CHAT_LEAVED, NEW_MESSAGE, START_TYPING, STOP_TYPING } from "../constants/events";
 import { useErrors, useSocketEvents } from '../hooks/hooks';
 import { useChatDetailsQuery, useGetMessagesQuery } from '../redux/api';
@@ -107,7 +107,7 @@ const Chat = ({ chatId }) => {
     if (chatDetails.isError) return navigate("/");
   }, [chatDetails.isError]);
    
-  const otherUseravatarURL=chatDetails?.data?.chat?.members[0]?.avatar
+  
   const newMessagesListener = useCallback(
     (data) => {
       if (data.chatId !== chatId) return;
@@ -165,7 +165,8 @@ const Chat = ({ chatId }) => {
   useSocketEvents(socket, eventHandler);
   useErrors(errors);
   const allMessages = [...oldMessages, ...messages];
-  
+  console.log("oldMessages",oldMessages)
+  console.log("messages",messages)
   return chatDetails.isLoading ? <Skeleton /> : (
     <>
       <Stack
@@ -186,7 +187,7 @@ const Chat = ({ chatId }) => {
         }}
       >
         {!allMessages.isLoading &&  allMessages.map((i) => (
-          <MessageComponent key={i._id} message={i} otherUserURl={otherUseravatarURL} />
+          <MessageComponent key={i._id} message={i} />
         ))}
         {userTyping && <TypingLoader />}
         <div ref={bottomRef} />
