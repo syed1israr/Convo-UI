@@ -9,19 +9,27 @@ import { useSelector } from 'react-redux'
 import { useChatDetailsQuery } from '../../redux/api'
 import { useParams } from 'react-router-dom'
 
-const MessageComponent = ({message}) => {
+const MessageComponent =  ({message}) => {
 
     const { user }=  useSelector(state=> state.auth);
     const params = useParams();
     const chatId = params.chatId;
     const {sender, content ,attachments,createdAt}=message
-    const chatDetails = useChatDetailsQuery({ chatId, skip: !chatId ,populate :true});
-    
-    const otherUserUrl = chatDetails?.data?.chat?.members[0].avatar
 
+
+    const chatDetails = useChatDetailsQuery({ chatId, skip: !chatId ,populate :true});
+
+
+    const membersarray = chatDetails?.data?.chat?.members
+
+    const filterduser=membersarray?.filter(u=>u._id!=(user?.data?._id) || (user?._id))
     const sameSender=sender?._id===((user?.data?._id) || (user?._id))
-    
+
+
+
+
     const timeAgo=moment(createdAt).fromNow()
+    
   return (
     <motion.div
         initial={{opacity:0,x:"-100%"}}
@@ -47,7 +55,7 @@ const MessageComponent = ({message}) => {
        }}
        >
        {
-        sameSender ?  <Avatar src={(user?.data?.avatar?.url) || (user?.avatar?.url)}/> :  <Avatar src={otherUserUrl}/> 
+         sameSender ?  <Avatar src={(user?.data?.avatar?.url) || (user?.avatar?.url)}/> : filterduser && filterduser[0]   && filterduser[0].avatar &&   <Avatar src={filterduser[0].avatar }/>
         }
        <div>
        {!sameSender && <Typography color={"#2694ab"} fontWeight={"600"} variant='caption'>{sender.name}</Typography>}
