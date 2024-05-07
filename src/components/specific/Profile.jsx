@@ -14,7 +14,10 @@ const Profile = () => {
     
   return (
     <Stack spacing={"2rem"} direction={"column"} alignItems={"center"}>
-      <Avatar
+    <a
+     href={(user?.data?.avatar?.url) ||(user?.avatar?.url) }
+     >
+     <Avatar
         src={(user?.data?.avatar?.url) ||(user?.avatar?.url) }
         sx={{
           width: 200,
@@ -24,6 +27,7 @@ const Profile = () => {
           border: "5px solid white",
         }}
       />
+     </a>
       <ProfileCard heading={"Bio"} text={(user?.bio) || (user?.data?.bio) } />
       <ProfileCard
         heading={"Username"}
