@@ -22,7 +22,7 @@ const MessageComponent =  ({message}) => {
 
     const membersarray = chatDetails?.data?.chat?.members
 
-    const filterduser=membersarray?.filter(u=>u._id!=(user?.data?._id) || (user?._id))
+    const filterduser = membersarray?.filter(member => member._id === sender._id);
     const sameSender=sender?._id===((user?.data?._id) || (user?._id))
 
 
@@ -54,9 +54,19 @@ const MessageComponent =  ({message}) => {
         alignItems:attachments ? "" : "center",
        }}
        >
-       {
-         sameSender ?  <Avatar src={(user?.data?.avatar?.url) || (user?.avatar?.url)}/> : filterduser && filterduser[0]   && filterduser[0].avatar &&   <Avatar src={filterduser[0].avatar }/>
-        }
+          {
+    sameSender ? (
+        <a href={(user?.data?.avatar?.url) || (user?.avatar?.url)} target="_blank">
+            <Avatar src={(user?.data?.avatar?.url) || (user?.avatar?.url)} />
+        </a>
+    ) : (
+        filterduser && filterduser[0] && filterduser[0].avatar && (
+            <a href={filterduser[0].avatar} target="_blank">
+                <Avatar src={filterduser[0].avatar} />
+            </a>
+        )
+    )
+    }
        <div>
        {!sameSender && <Typography color={"#2694ab"} fontWeight={"600"} variant='caption'>{sender.name}</Typography>}
         {
