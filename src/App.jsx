@@ -53,12 +53,12 @@ const dispatch= useDispatch()
       <Route path='/admin/dashboard' element={<Dashboard/>}/>
       <Route path='/admin/users' element={<UserManagement/>}/>
       <Route path='/admin/chats' element={<ChatManagement/>}/>
-      <Route path='/admin/messages' element={<MessageManagement/>}/>
+      <Route path='/admin/messages' element={<NotFound/>}/>
 
       
       <Route path='*' element={<NotFound/>}/>
       </Routes>
-     </Suspense>
+     </Suspense>``
      <Toaster position="bottom-center"/>
     </BrowserRouter>
    
