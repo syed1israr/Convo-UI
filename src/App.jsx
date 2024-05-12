@@ -58,7 +58,7 @@ const dispatch= useDispatch()
       
       <Route path='*' element={<NotFound/>}/>
       </Routes>
-     </Suspense>``
+     </Suspense>
      <Toaster position="bottom-center"/>
     </BrowserRouter>
    
